@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Formulir Pengaduan</title>
+    <title>Formulir Permohonan KTP</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -10,86 +10,91 @@
             margin: 2cm;
         }
         .header {
-            background: #f8f9fa;
-            padding: 20px;
             text-align: center;
-            margin-bottom: 30px;
+            border-bottom: 2px solid #000;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        .logo {
+            text-align: center;
+            margin-bottom: 20px;
         }
         .title {
-            font-size: 18px;
+            font-size: 16px;
             font-weight: bold;
-            color: #dc3545;
-            margin: 0;
+            text-align: center;
+            margin: 20px 0;
         }
-        .subtitle {
-            color: #666;
-            margin: 5px 0 0;
-        }
-        .content {
-            border: 1px solid #ddd;
-            padding: 20px;
+        .box {
+            border: 1px solid #000;
+            padding: 10px;
             margin-bottom: 20px;
         }
         .field {
             margin-bottom: 15px;
-            border-bottom: 1px dotted #ddd;
-            padding-bottom: 10px;
         }
         .label {
             font-weight: bold;
-            color: #dc3545;
+            display: inline-block;
+            width: 200px;
         }
-        .privacy-notice {
-            font-size: 12px;
+        .warning {
             background: #f8f9fa;
             padding: 10px;
             margin-top: 20px;
+            font-size: 12px;
         }
-        .status-stamp {
-            margin-top: 30px;
-            border: 2px solid #dc3545;
-            color: #dc3545;
+        .status-box {
+            border: 2px solid #000;
             padding: 10px;
             text-align: center;
-            font-weight: bold;
+            margin-top: 30px;
         }
     </style>
 </head>
 <body>
     <div class="header">
-        <h1 class="title">FORMULIR PENGADUAN MASYARAKAT</h1>
-        <p class="subtitle">Nomor Pengaduan: PGD-{{ sprintf('%04d', $submission->id) }}/{{ date('Y') }}</p>
+        <h2>FORMULIR PERMOHONAN KTP ELEKTRONIK</h2>
+        <p>DINAS KEPENDUDUKAN DAN PENCATATAN SIPIL</p>
     </div>
 
-    <div class="content">
+    <div class="title">
+        No. Register: {{ sprintf('REG-%04d/KTP/%s', $submission->id, date('Y')) }}
+    </div>
+
+    <div class="box">
         <div class="field">
-            <div class="label">Nama Pelapor:</div>
-            <div>{{ $submission->nama }}</div>
+            <span class="label">Nama Lengkap</span>
+            <span>: {{ $submission->nama }}</span>
         </div>
 
         <div class="field">
-            <div class="label">Lokasi Kejadian:</div>
-            <div>{{ $submission->alamat }}</div>
+            <span class="label">Alamat Domisili</span>
+            <span>: {{ $submission->alamat }}</span>
         </div>
 
         <div class="field">
-            <div class="label">Isi Pengaduan:</div>
-            <div>{{ $submission->tujuan }}</div>
+            <span class="label">Alasan Permohonan</span>
+            <span>: {{ $submission->tujuan }}</span>
         </div>
 
         <div class="field">
-            <div class="label">Tanggal Laporan:</div>
-            <div>{{ $submission->created_at->format('d F Y H:i:s') }}</div>
+            <span class="label">Tanggal Permohonan</span>
+            <span>: {{ $submission->created_at->format('d F Y') }}</span>
         </div>
     </div>
 
-    <div class="privacy-notice">
-        <strong>Pemberitahuan Privasi:</strong>
-        <p>Identitas pelapor akan dijaga kerahasiaannya sesuai dengan ketentuan yang berlaku.</p>
+    <div class="warning">
+        <strong>Persyaratan yang harus dilengkapi:</strong>
+        <ol>
+            <li>Fotokopi KK</li>
+            <li>Surat Pengantar RT/RW</li>
+            <li>Pas Foto 3x4 (2 lembar)</li>
+        </ol>
     </div>
 
-    <div class="status-stamp">
-        STATUS PENGADUAN: {{ strtoupper($submission->status) }}
+    <div class="status-box">
+        STATUS PERMOHONAN: {{ strtoupper($submission->status) }}
     </div>
 </body>
 </html>

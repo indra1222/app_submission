@@ -11,22 +11,19 @@ class SubmissionController extends Controller
 {
     public function index()
     {
-        $submissions = Submission::with('user')
-            ->latest()
-            ->get();
-            
+        $submissions = Submission::with('user')->latest()->get();
         return view('admin.submissions.index', compact('submissions'));
     }
 
     public function updateStatus(Request $request, Submission $submission)
     {
-        $validated = $request->validate([
-            'status' => 'required|in:pending,approved,rejected'
+        $request->validate([
+            'status' => 'required|in:pending,approved,rejected',
         ]);
 
-        $submission->update($validated);
+        $submission->update(['status' => $request->status]);
 
-        return back()->with('success', 'Status submission berhasil diperbarui.');
+        return back()->with('success', 'Status berhasil diupdate!');
     }
 
     public function generatePDF(Submission $submission)
@@ -36,18 +33,16 @@ class SubmissionController extends Controller
             'form1' => 'admin.submissions.pdf_form1',
             'form2' => 'admin.submissions.pdf_form2',
             'form3' => 'admin.submissions.pdf_form3',
-            default => 'admin.submissions.pdf'
         };
-    
-        // Nama file yang berbeda untuk setiap form
-        $namaFile = match($submission->jenis_form) {
-            'form1' => 'Surat_Pengajuan_',
-            'form2' => 'Permohonan_KTP_',
-            'form3' => 'Formulir_Pengaduan_',
-            default => 'Submission_'
+
+        // Nama file yang berbeda untuk setiap jenis form
+        $filename = match($submission->jenis_form) {
+            'form1' => 'Surat_Pengajuan',
+            'form2' => 'Permohonan_KTP',
+            'form3' => 'Form_Pengaduan',
         };
-    
+
         $pdf = PDF::loadView($view, compact('submission'));
-        return $pdf->download($namaFile . $submission->id . '.pdf');
+        return $pdf->download($filename . '_' . $submission->id . '.pdf');
     }
 }

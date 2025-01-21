@@ -18,19 +18,16 @@ class SubmissionController extends Controller
         return view('submissions.create');
     }
 
-    // Tambah method untuk Form 1
     public function createForm1()
     {
         return view('submissions.form1');
     }
 
-    // Tambah method untuk Form 2
     public function createForm2()
     {
         return view('submissions.form2');
     }
 
-    // Tambah method untuk Form 3
     public function createForm3()
     {
         return view('submissions.form3');

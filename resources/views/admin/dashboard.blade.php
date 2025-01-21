@@ -2,99 +2,105 @@
 
 @section('content')
 <div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="card shadow-sm border-0">
-                <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
-                    <h3 class="mb-0">
-                        <i class="fas fa-tachometer-alt me-2"></i>Dashboard Admin
-                    </h3>
-                    <span class="badge bg-light text-dark">{{ date('d M Y') }}</span>
+    <!-- Menu Bar -->
+    <div class="mb-4">
+        <div class="card bg-primary text-white">
+            <div class="card-body d-flex justify-content-between align-items-center">
+                <div>
+                    <i class="fas fa-paper-plane me-2"></i> Sistem Form
                 </div>
-                
+                <div>
+                    <a href="{{ route('admin.dashboard') }}" class="btn btn-outline-light btn-sm me-2">
+                        <i class="fas fa-tachometer-alt me-1"></i> Dashboard Admin
+                    </a>
+                    <a href="{{ route('admin.submissions.index') }}" class="btn btn-outline-light btn-sm">
+                        <i class="fas fa-list me-1"></i> Kelola Submissions
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Stats Cards -->
+    <div class="row mb-4">
+        <div class="col-md-3">
+            <div class="card bg-primary text-white h-100">
                 <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-3 mb-3">
-                            <div class="card border-0 shadow-sm">
-                                <div class="card-body d-flex justify-content-between align-items-center">
-                                    <div>
-                                        <h5 class="card-title text-muted">Total Users</h5>
-                                        <h2 class="text-primary">{{ $stats['total_users'] }}</h2>
-                                    </div>
-                                    <i class="fas fa-users fa-2x text-primary opacity-50"></i>
-                                </div>
-                            </div>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="mb-0">Total Users</h6>
+                            <h2 class="mb-0">{{ $stats['total_users'] }}</h2>
                         </div>
-
-                        <div class="col-md-3 mb-3">
-                            <div class="card border-0 shadow-sm">
-                                <div class="card-body d-flex justify-content-between align-items-center">
-                                    <div>
-                                        <h5 class="card-title text-muted">Total Submissions</h5>
-                                        <h2 class="text-success">{{ $stats['total_submissions'] }}</h2>
-                                    </div>
-                                    <i class="fas fa-file-alt fa-2x text-success opacity-50"></i>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-3 mb-3">
-                            <div class="card border-0 shadow-sm">
-                                <div class="card-body d-flex justify-content-between align-items-center">
-                                    <div>
-                                        <h5 class="card-title text-muted">Pending</h5>
-                                        <h2 class="text-warning">{{ $stats['pending_submissions'] }}</h2>
-                                    </div>
-                                    <i class="fas fa-hourglass-half fa-2x text-warning opacity-50"></i>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-3 mb-3">
-                            <div class="card border-0 shadow-sm">
-                                <div class="card-body d-flex justify-content-between align-items-center">
-                                    <div>
-                                        <h5 class="card-title text-muted">Approved</h5>
-                                        <h2 class="text-info">{{ $stats['approved_submissions'] }}</h2>
-                                    </div>
-                                    <i class="fas fa-check-circle fa-2x text-info opacity-50"></i>
-                                </div>
-                            </div>
-                        </div>
+                        <i class="fas fa-users fa-2x opacity-50"></i>
                     </div>
+                </div>
+            </div>
+        </div>
 
-                    <hr class="my-4">
-
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="card border-0 shadow-sm">
-                                <div class="card-header bg-light">
-                                    <h4 class="mb-0">
-                                        <i class="fas fa-tasks me-2"></i>Menu Admin
-                                    </h4>
-                                </div>
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col-md-4 mb-3">
-                                            <a href="{{ route('admin.submissions.index') }}" class="btn btn-outline-primary w-100">
-                                                <i class="fas fa-list-ul me-2"></i>Kelola Submissions
-                                            </a>
-                                        </div>
-                                        <div class="col-md-4 mb-3">
-                                            <a href="#" class="btn btn-outline-success w-100">
-                                                <i class="fas fa-users-cog me-2"></i>Manajemen User
-                                            </a>
-                                        </div>
-                                        <div class="col-md-4 mb-3">
-                                            <a href="#" class="btn btn-outline-info w-100">
-                                                <i class="fas fa-chart-bar me-2"></i>Laporan
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+        <div class="col-md-3">
+            <div class="card bg-success text-white h-100">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="mb-0">Total Submissions</h6>
+                            <h2 class="mb-0">{{ $stats['total_submissions'] }}</h2>
                         </div>
+                        <i class="fas fa-file-alt fa-2x opacity-50"></i>
                     </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card bg-warning text-white h-100">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="mb-0">Pending</h6>
+                            <h2 class="mb-0">{{ $stats['pending_submissions'] }}</h2>
+                        </div>
+                        <i class="fas fa-clock fa-2x opacity-50"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card bg-info text-white h-100">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="mb-0">Approved</h6>
+                            <h2 class="mb-0">{{ $stats['approved_submissions'] }}</h2>
+                        </div>
+                        <i class="fas fa-check-circle fa-2x opacity-50"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="card">
+        <div class="card-header bg-white">
+            <h5 class="mb-0"><i class="fas fa-bolt me-2"></i>Quick Actions</h5>
+        </div>
+        <div class="card-body">
+            <div class="row g-3">
+                <div class="col-md-4">
+                    <a href="{{ route('admin.submissions.index') }}" class="btn btn-primary w-100">
+                        <i class="fas fa-list me-2"></i>Manage Submissions
+                    </a>
+                </div>
+                <div class="col-md-4">
+                    <button class="btn btn-success w-100" disabled>
+                        <i class="fas fa-user-plus me-2"></i>Add New User
+                    </button>
+                </div>
+                <div class="col-md-4">
+                    <button class="btn btn-info w-100" disabled>
+                        <i class="fas fa-cog me-2"></i>Settings
+                    </button>
                 </div>
             </div>
         </div>

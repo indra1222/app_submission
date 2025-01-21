@@ -8,7 +8,7 @@ class Submission extends Model
 {
     protected $fillable = [
         'user_id',
-        'nama',
+        'nama', 
         'alamat',
         'tujuan',
         'jenis_form',

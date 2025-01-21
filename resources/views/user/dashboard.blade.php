@@ -63,6 +63,7 @@
                                         <th>Jenis Form</th>
                                         <th>Tanggal</th>
                                         <th>Status</th>
+                                        <th>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -71,11 +72,11 @@
                                             <td>{{ $loop->iteration }}</td>
                                             <td>
                                                 @if($submission->jenis_form == 'form1')
-                                                    Pengajuan Surat
+                                                    <span class="badge bg-primary">Pengajuan Surat</span>
                                                 @elseif($submission->jenis_form == 'form2')
-                                                    Permohonan KTP
+                                                    <span class="badge bg-success">Permohonan KTP</span>
                                                 @else
-                                                    Pengaduan
+                                                    <span class="badge bg-danger">Pengaduan</span>
                                                 @endif
                                             </td>
                                             <td>{{ $submission->created_at->format('d M Y') }}</td>
@@ -88,18 +89,52 @@
                                                     <span class="badge bg-danger">Rejected</span>
                                                 @endif
                                             </td>
+                                            <td>
+                                                <button type="button" class="btn btn-sm btn-info" data-bs-toggle="modal" data-bs-target="#detail-{{ $submission->id }}">
+                                                    <i class="fas fa-eye"></i>
+                                                </button>
+                                            </td>
                                         </tr>
+
+                                        <!-- Modal Detail -->
+                                        <div class="modal fade" id="detail-{{ $submission->id }}" tabindex="-1">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title">Detail Submission</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <table class="table table-bordered">
+                                                            <tr>
+                                                                <th width="30%">Nama</th>
+                                                                <td>{{ $submission->nama }}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th>Alamat</th>
+                                                                <td>{{ $submission->alamat }}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th>Tujuan</th>
+                                                                <td>{{ $submission->tujuan }}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th>Status</th>
+                                                                <td>{{ ucfirst($submission->status) }}</td>
+                                                            </tr>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     @empty
                                         <tr>
-                                            <td colspan="4" class="text-center">Belum ada pengajuan</td>
+                                            <td colspan="5" class="text-center">Belum ada pengajuan</td>
                                         </tr>
                                     @endforelse
                                 </tbody>
                             </table>
                         </div>
-                        <a href="{{ route('submissions.index') }}" class="btn btn-primary">
-                            <i class="fas fa-list me-1"></i>Lihat Semua
-                        </a>
                     </div>
                 </div>
             </div>

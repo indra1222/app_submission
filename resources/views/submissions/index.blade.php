@@ -4,24 +4,26 @@
 <div class="container">
     <div class="card">
         <div class="card-header d-flex justify-content-between align-items-center">
-            <h4 class="mb-0">Riwayat Submission</h4>
-            <a href="{{ route('submissions.create') }}" class="btn btn-primary">
-                <i class="fas fa-plus-circle me-1"></i> Buat Submission
-            </a>
+            <h5 class="mb-0">History Submissions</h5>
+            <div>
+                <a href="{{ route('submissions.createForm1') }}" class="btn btn-primary btn-sm">
+                    <i class="fas fa-file me-1"></i>Form Surat
+                </a>
+                <a href="{{ route('submissions.createForm2') }}" class="btn btn-success btn-sm">
+                    <i class="fas fa-id-card me-1"></i>Form KTP
+                </a>
+                <a href="{{ route('submissions.createForm3') }}" class="btn btn-danger btn-sm">
+                    <i class="fas fa-exclamation-circle me-1"></i>Form Pengaduan
+                </a>
+            </div>
         </div>
-
+        
         <div class="card-body">
-            @if(session('success'))
-                <div class="alert alert-success">
-                    {{ session('success') }}
-                </div>
-            @endif
-
             <div class="table-responsive">
-                <table class="table table-bordered table-hover">
+                <table class="table table-hover">
                     <thead>
                         <tr>
-                            <th>ID</th>
+                            <th>No</th>
                             <th>Tanggal</th>
                             <th>Jenis Form</th>
                             <th>Status</th>
@@ -31,7 +33,7 @@
                     <tbody>
                         @forelse($submissions as $submission)
                             <tr>
-                                <td>#{{ $submission->id }}</td>
+                                <td>{{ $loop->iteration }}</td>
                                 <td>{{ $submission->created_at->format('d/m/Y H:i') }}</td>
                                 <td>
                                     @if($submission->jenis_form == 'form1')
@@ -39,7 +41,7 @@
                                     @elseif($submission->jenis_form == 'form2')
                                         <span class="badge bg-success">Permohonan KTP</span>
                                     @else
-                                        <span class="badge bg-info">Pengaduan</span>
+                                        <span class="badge bg-danger">Pengaduan</span>
                                     @endif
                                 </td>
                                 <td>
@@ -52,53 +54,52 @@
                                     @endif
                                 </td>
                                 <td>
-                                    <!-- Tombol Generate Dokumen (hanya muncul jika status approved) -->
+                                    <button type="button" class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#detail-{{ $submission->id }}">
+                                        <i class="fas fa-eye"></i> Detail
+                                    </button>
+                                    
                                     @if($submission->status == 'approved')
-                                        <div class="btn-group">
-                                            <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-bs-toggle="dropdown">
-                                                <i class="fas fa-file me-1"></i> Dokumen
-                                            </button>
-                                            <ul class="dropdown-menu">
-                                                <li>
-                                                    <a class="dropdown-item" href="{{ route('documents.surat-tugas', ['id' => $submission->id]) }}" target="_blank">
-                                                        <i class="fas fa-eye me-1"></i> Lihat Surat Tugas
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a class="dropdown-item" href="{{ route('documents.surat-tugas', ['id' => $submission->id, 'type' => 'pdf']) }}">
-                                                        <i class="fas fa-download me-1"></i> Download Surat Tugas
-                                                    </a>
-                                                </li>
-                                                <li><hr class="dropdown-divider"></li>
-                                                <li>
-                                                    <a class="dropdown-item" href="{{ route('documents.sppd', ['id' => $submission->id]) }}" target="_blank">
-                                                        <i class="fas fa-eye me-1"></i> Lihat SPPD
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a class="dropdown-item" href="{{ route('documents.sppd', ['id' => $submission->id, 'type' => 'pdf']) }}">
-                                                        <i class="fas fa-download me-1"></i> Download SPPD
-                                                    </a>
-                                                </li>
-                                                <li><hr class="dropdown-divider"></li>
-                                                <li>
-                                                    <a class="dropdown-item" href="{{ route('documents.kuitansi', ['id' => $submission->id]) }}" target="_blank">
-                                                        <i class="fas fa-eye me-1"></i> Lihat Kuitansi
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a class="dropdown-item" href="{{ route('documents.kuitansi', ['id' => $submission->id, 'type' => 'pdf']) }}">
-                                                        <i class="fas fa-download me-1"></i> Download Kuitansi
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </div>
+                                        <a href="{{ route('admin.submissions.pdf', $submission) }}" class="btn btn-primary btn-sm">
+                                            <i class="fas fa-download"></i> PDF
+                                        </a>
                                     @endif
                                 </td>
                             </tr>
+
+                            <!-- Modal Detail -->
+                            <div class="modal fade" id="detail-{{ $submission->id }}" tabindex="-1">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">Detail Submission</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <table class="table table-bordered">
+                                                <tr>
+                                                    <th width="30%">Nama</th>
+                                                    <td>{{ $submission->nama }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Alamat</th>
+                                                    <td>{{ $submission->alamat }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Tujuan</th>
+                                                    <td>{{ $submission->tujuan }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Status</th>
+                                                    <td>{{ ucfirst($submission->status) }}</td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         @empty
                             <tr>
-                                <td colspan="5" class="text-center">Tidak ada data submission.</td>
+                                <td colspan="5" class="text-center">Belum ada submission</td>
                             </tr>
                         @endforelse
                     </tbody>
