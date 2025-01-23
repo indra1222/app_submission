@@ -52,11 +52,9 @@
                                     <button type="button" class="btn btn-sm btn-info" data-bs-toggle="modal" data-bs-target="#detail-{{ $submission->id }}">
                                         <i class="fas fa-eye"></i>
                                     </button>
-                                    @if($submission->status == 'approved')
-                                        <a href="{{ route('admin.submissions.pdf', $submission) }}" class="btn btn-sm btn-primary">
-                                            <i class="fas fa-download"></i>
-                                        </a>
-                                    @endif
+                                    <a href="{{ route('admin.submissions.pdf', $submission) }}" class="btn btn-sm btn-primary">
+                                        <i class="fas fa-download"></i>
+                                    </a>
                                 </td>
                             </tr>
 
