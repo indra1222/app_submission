@@ -1,96 +1,104 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="utf-8">
-    <title>Surat Pengajuan</title>
+    <title>Surat Tugas</title>
     <style>
-        body {
-            font-family: Times New Roman, serif;
-            line-height: 1.6;
-            margin: 2cm;
-        }
-        .kop-surat {
-            text-align: center;
-            border-bottom: 3px double #000;
-            padding-bottom: 10px;
-            margin-bottom: 30px;
-        }
-        .kop-surat h1 {
-            font-size: 18px;
-            font-weight: bold;
-            margin: 0;
-        }
-        .nomor-surat {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-        .content {
-            margin: 20px 0;
-        }
-        .field {
-            margin-bottom: 15px;
-        }
-        .label {
-            font-weight: bold;
-            display: inline-block;
-            width: 150px;
-        }
-        .tandatangan {
-            margin-top: 50px;
-            text-align: right;
-        }
-        .stempel {
-            margin-top: 80px;
-            text-align: center;
-            border: 2px solid #000;
-            padding: 10px;
-            width: 200px;
-            float: right;
-        }
+    body {
+        font-family: Times New Roman, serif;
+        margin: 2cm;
+        line-height: 1.6;
+    }
+
+    .kop-surat {
+        text-align: center;
+        border-bottom: 3px double #000;
+        padding-bottom: 10px;
+        margin-bottom: 30px;
+    }
+
+    .kop-surat h1 {
+        font-size: 18px;
+        font-weight: bold;
+        margin: 0;
+    }
+
+    .kop-surat p {
+        margin: 0;
+        font-size: 14px;
+    }
+
+    .nomor-surat {
+        text-align: right;
+        margin-bottom: 20px;
+    }
+
+    .section {
+        margin-bottom: 20px;
+    }
+
+    .label {
+        font-weight: bold;
+    }
+
+    .tandatangan {
+        margin-top: 50px;
+        text-align: right;
+    }
+
+    .info {
+        margin-top: 10px;
+        font-size: 14px;
+    }
     </style>
 </head>
+
 <body>
     <div class="kop-surat">
-        <h1>SURAT PENGAJUAN RESMI</h1>
-        <h2>PEMERINTAH KABUPATEN/KOTA</h2>
+        <h1>BADAN PUSAT STATISTIK KABUPATEN/KOTA</h1>
         <p>Jalan Raya No. 123, Telepon: (021) 1234567</p>
     </div>
 
     <div class="nomor-surat">
-        <p>Nomor: {{ sprintf('%04d', $submission->id) }}/PGJ/{{ date('m/Y') }}</p>
+        <p>Nomor: {{ sprintf('%04d', $submission->id) }}/TGS/{{ date('m/Y') }}</p>
     </div>
 
-    <div class="content">
-        <div class="field">
-            <span class="label">Nama Pemohon</span>
-            <span>: {{ $submission->nama }}</span>
-        </div>
+    <div class="section">
+        <p class="label">Menimbang:</p>
+        <p>{{ $submission->menimbang }}</p>
+    </div>
 
-        <div class="field">
-            <span class="label">Alamat KTP</span>
-            <span>: {{ $submission->alamat }}</span>
-        </div>
+    <div class="section">
+        <p class="label">Kepada:</p>
+        <ul>
+            @foreach (json_decode($submission->kepada, true) as $item)
+            <li>
+                <p>Nama: {{ $item['nama'] }}</p>
+                <p>NIP/NIK: {{ $item['nip_nik'] }}</p>
+                <p>Jabatan: {{ $item['jabatan'] }}</p>
+            </li>
+            @endforeach
+        </ul>
+    </div>
 
-        <div class="field">
-            <span class="label">Tujuan Pengajuan</span>
-            <span>: {{ $submission->tujuan }}</span>
-        </div>
+    <div class="section">
+        <p class="label">Untuk:</p>
+        <p>{{ $submission->untuk }}</p>
+    </div>
 
-        <div class="field">
-            <span class="label">Tanggal Pengajuan</span>
-            <span>: {{ $submission->created_at->format('d F Y') }}</span>
-        </div>
+    <div class="section">
+        <p class="label">Jangka Waktu:</p>
+        <p>{{ $submission->jangka_waktu }}</p>
     </div>
 
     <div class="tandatangan">
-        <p>{{ date('d F Y') }}</p>
-        <p>Mengetahui,</p>
+        <p>Garut, {{ date('d F Y') }}</p>
+        <p>Kepala,</p>
         <br><br><br>
-        <p>Kepala Bagian</p>
-    </div>
-
-    <div class="stempel">
-        Status: {{ strtoupper($submission->status) }}
+        <p>{{ $submission->kepala }}</p>
+        <p>NIP. {{ $submission->nip_kepala }}</p>
     </div>
 </body>
+
 </html>
