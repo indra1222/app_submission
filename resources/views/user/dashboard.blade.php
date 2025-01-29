@@ -25,7 +25,7 @@
                                        <i class="fas fa-file-alt fa-3x text-primary"></i>
                                    </div>
                                    <h5 class="card-title fw-bold">Form Pengajuan Surat</h5>
-                                   <p class="card-text text-muted">Ajukan surat-menyurat resmi untuk berbagai keperluan</p>
+                                   <p class="card-text text-muted">Ajukan surat-menyurat</p>
                                    <a href="{{ route('submissions.createForm1') }}" class="btn btn-primary w-100">
                                        <i class="fas fa-plus me-2"></i>Buat Pengajuan
                                    </a>
@@ -39,8 +39,8 @@
                                    <div class="bg-success bg-opacity-10 rounded-circle p-3 d-inline-block mb-3">
                                        <i class="fas fa-id-card fa-3x text-success"></i>
                                    </div>
-                                   <h5 class="card-title fw-bold">Form KTP</h5>
-                                   <p class="card-text text-muted">Ajukan permohonan pembuatan atau perpanjangan KTP</p>
+                                   <h5 class="card-title fw-bold">Permohonan SPPD</h5>
+                                   <p class="card-text text-muted">Ajukan permohonan SPPD</p>
                                    <a href="{{ route('submissions.createForm2') }}" class="btn btn-success w-100">
                                        <i class="fas fa-plus me-2"></i>Buat Permohonan
                                    </a>
@@ -54,7 +54,7 @@
                                    <div class="bg-danger bg-opacity-10 rounded-circle p-3 d-inline-block mb-3">
                                        <i class="fas fa-exclamation-triangle fa-3x text-danger"></i>
                                    </div>
-                                   <h5 class="card-title fw-bold">Form Pengaduan</h5>
+                                   <h5 class="card-title fw-bold">Form Kuitansi</h5>
                                    <p class="card-text text-muted">Sampaikan pengaduan atau keluhan Anda</p>
                                    <a href="{{ route('submissions.createForm3') }}" class="btn btn-danger w-100">
                                        <i class="fas fa-plus me-2"></i>Buat Pengaduan

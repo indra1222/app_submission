@@ -1,4 +1,3 @@
-// resources/views/admin/surat-keluar.blade.php
 @extends('layouts.app')
 
 @section('content')

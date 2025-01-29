@@ -6,10 +6,10 @@
         <div class="col-md-8">
             <div class="card shadow-sm">
                 <div class="card-header bg-danger text-white">
-                    <h5 class="mb-0"><i class="fas fa-exclamation-circle me-2"></i>Form Pengaduan</h5>
+                    <h5 class="mb-0"><i class="fas fa-exclamation-circle me-2"></i>Form Kuitansi</h5>
                 </div>
                 <div class="card-body">
-                    <form method="POST" action="{{ route('submissions.store') }}">
+                    <form method="POST" action="{{ route('submissions.store') }}" enctype="multipart/form-data">
                         @csrf
                         <input type="hidden" name="jenis_form" value="form3">
 
@@ -35,6 +35,15 @@
                             @error('tujuan')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Unggah Dokumen Pendukung (opsional)</label>
+                            <input type="file" name="document" class="form-control @error('document') is-invalid @enderror" accept="application/pdf">
+                            @error('document')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                            <div class="form-text">Ukuran maksimum file PDF adalah 2MB.</div>
                         </div>
 
                         <div class="d-flex justify-content-between">

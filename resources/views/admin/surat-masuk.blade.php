@@ -1,4 +1,3 @@
-// resources/views/admin/surat-masuk.blade.php
 @extends('layouts.app')
 
 @section('content')

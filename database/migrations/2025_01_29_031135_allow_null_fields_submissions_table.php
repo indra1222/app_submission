@@ -6,9 +6,6 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up()
     {
         Schema::table('submissions', function (Blueprint $table) {
@@ -18,7 +15,7 @@ return new class extends Migration
             $table->string('jangka_waktu')->nullable()->change();
         });
     }
-    
+
     public function down()
     {
         Schema::table('submissions', function (Blueprint $table) {

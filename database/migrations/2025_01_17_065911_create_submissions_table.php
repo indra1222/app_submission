@@ -13,11 +13,11 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained();
             $table->string('nama');
             $table->text('alamat');
-            $table->text('tujuan');
-            $table->text('menimbang');  // Added 'menimbang' field
-            $table->json('kepada');  // Added 'kepada' field as a JSON type
-            $table->text('untuk');  // Added 'untuk' field
-            $table->string('jangka_waktu');  // Added 'jangka_waktu' field
+            $table->text('tujuan'); 
+            $table->text('menimbang')->nullable(); // Boleh kosong
+            $table->json('kepada')->nullable(); // Boleh kosong
+            $table->text('untuk')->nullable(); // Boleh kosong
+            $table->string('jangka_waktu')->nullable(); // Boleh kosong
             $table->enum('jenis_form', ['form1', 'form2', 'form3']);
             $table->enum('status', ['pending', 'approved', 'rejected'])->default('pending');
             $table->timestamps();

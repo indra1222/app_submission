@@ -13,7 +13,7 @@
     
     <style>
         body {
-            background-color: #f4f6f9;
+            background-color:rgb(22, 103, 225);
         }
         .card {
             border-radius: 15px;

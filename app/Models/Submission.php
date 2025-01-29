@@ -1,10 +1,9 @@
 <?php
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Submission extends Model
+class Submission extends Model 
 {
     protected $fillable = [
         'user_id',
@@ -13,14 +12,15 @@ class Submission extends Model
         'menimbang',
         'tujuan',
         'jenis_form',
-        'kepada', // Disimpan sebagai JSON
+        'kepada',
         'untuk',
         'jangka_waktu',
-        'status'
+        'status',
+        'document_path'
     ];
-
+    
     protected $casts = [
-        'kepada' => 'array', // Untuk mendukung penyimpanan data JSON
+        'kepada' => 'array',
     ];
 
     public function user()
