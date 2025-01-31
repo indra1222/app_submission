@@ -16,7 +16,8 @@ class Submission extends Model
         'untuk',
         'jangka_waktu',
         'status',
-        'document_path'
+        'document_path',
+        'admin_document_path'
     ];
     
     protected $casts = [
