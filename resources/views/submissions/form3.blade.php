@@ -14,7 +14,7 @@
                         <input type="hidden" name="jenis_form" value="form3">
 
                         <div class="mb-3">
-                            <label class="form-label">Nama Pelapor</label>
+                            <label class="form-label">Nama Lengkap</label>
                             <input type="text" name="nama" class="form-control @error('nama') is-invalid @enderror" required>
                             @error('nama')
                                 <div class="invalid-feedback">{{ $message }}</div>
@@ -22,7 +22,7 @@
                         </div>
 
                         <div class="mb-3">
-                            <label class="form-label">Lokasi Kejadian</label>
+                            <label class="form-label">NIK</label>
                             <textarea name="alamat" class="form-control @error('alamat') is-invalid @enderror" rows="3" required></textarea>
                             @error('alamat')
                                 <div class="invalid-feedback">{{ $message }}</div>
@@ -30,7 +30,7 @@
                         </div>
 
                         <div class="mb-3">
-                            <label class="form-label">Isi Pengaduan</label>
+                            <label class="form-label">Keterangan</label>
                             <textarea name="tujuan" class="form-control @error('tujuan') is-invalid @enderror" rows="3" required></textarea>
                             @error('tujuan')
                                 <div class="invalid-feedback">{{ $message }}</div>

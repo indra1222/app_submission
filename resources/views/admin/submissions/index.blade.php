@@ -16,16 +16,11 @@
     <!-- Main Card -->
     <div class="card shadow-lg rounded-4 border-0 transform-hover transition-all">
         <!-- Enhanced Header -->
-        <div class="card-header bg-gradient-primary text-white d-flex align-items-center justify-content-between py-4 px-4 rounded-top-4 position-relative overflow-hidden">
+        <div class="card-header bg-gradient-primary text-blue d-flex align-items-center justify-content-between py-4 px-4 rounded-top-4 position-relative overflow-hidden">
             <!-- Decorative Background -->
-            <div class="position-absolute top-0 end-0 opacity-20">
-                <svg width="200" height="200" viewBox="0 0 100 100" class="text-white">
-                    <path fill="currentColor" d="M65.5,20.2C68.3,31.3,71,42.4,66.6,49.8C62.2,57.2,50.7,60.8,39.7,61.9C28.7,63,18.2,61.6,12.6,54.9C7,48.2,6.3,36.3,10.2,27.7C14.1,19.1,22.7,13.8,31.7,11.2C40.7,8.6,50.2,8.7,57.7,11.5C65.2,14.3,70.8,19.8,71.5,25.9" />
-                </svg>
-            </div>
             
             <div class="d-flex align-items-center">
-                <div class="bg-white bg-opacity-20 p-2 rounded-circle me-3">
+                <div class="bg-blue bg-opacity-20 p-2 rounded-circle me-3">
                     <i class="fas fa-history fa-lg text-warning"></i>
                 </div>
                 <h4 class="mb-0 fw-bold">Submission History</h4>

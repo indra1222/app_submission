@@ -43,7 +43,7 @@
         <!-- Stats Cards -->
         <div class="row g-4 mb-4">
             <div class="col-md-3">
-                <div class="card border-0 bg-gradient-purple text-white rounded-4 shadow-hover transform-hover">
+                <div class="card border0 bg-gradient-purple text-white rounded-4 shadow-hover transform-hover">
                     <div class="card-body p-4">
                         <div class="d-flex justify-content-between align-items-center">
                             <div>
@@ -59,7 +59,7 @@
             </div>
 
             <div class="col-md-3">
-                <div class="card border-0 bg-gradient-orange text-white rounded-4 shadow-hover transform-hover">
+                <div class="card border0 bg-gradient-blue text-white rounded-4 shadow-hover transform-hover">
                     <div class="card-body p-4">
                         <div class="d-flex justify-content-between align-items-center">
                             <div>

@@ -14,7 +14,7 @@
                             <th>No.</th>
                             <th>Tanggal</th>
                             <th>Nama</th>
-                            <th>Tujuan</th>
+                            <th>NIK</th>
                             <th>Status</th>
                             <th>Aksi</th>
                         </tr>
@@ -25,6 +25,7 @@
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ $submission->created_at->format('d/m/Y') }}</td>
                             <td>{{ $submission->nama }}</td>
+                            <td>{{ $submission->alamat }}</td>
                             <td>{{ $submission->tujuan }}</td>
                             <td>
                                 <span class="badge bg-{{ $submission->status == 'pending' ? 'warning' : ($submission->status == 'approved' ? 'success' : 'danger') }}">
