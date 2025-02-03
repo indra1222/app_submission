@@ -122,12 +122,13 @@
                                 <h6 class="fw-bold mb-2">{{ $submission->nama }}</h6>
                                 <p class="small text-muted mb-3">{{ Str::limit($submission->tujuan, 50) }}</p>
                                 <!-- Action -->
-                                @if($submission->status == 'approved')
-                                    <a href="{{ route('submissions.pdf', $submission->id) }}" 
-                                       class="btn btn-primary btn-sm rounded-pill w-100">
-                                        <i class="fas fa-download me-1"></i>Download
-                                    </a>
-                                @else
+                                @if($submission->status == 'approved' && $submission->admin_document_path)
+    <a href="{{ Storage::url('documents/'.$submission->admin_document_path) }}" 
+       class="btn btn-primary btn-sm rounded-pill w-100"
+       target="_blank">
+        <i class="fas fa-download me-1"></i>Download Surat Balasan
+    </a>
+@else
                                     <button class="btn btn-secondary btn-sm rounded-pill w-100"
                                             data-bs-toggle="modal" 
                                             data-bs-target="#detail-{{ $submission->id }}">
@@ -200,12 +201,13 @@
                                 <h6 class="fw-bold mb-2">{{ $submission->nama }}</h6>
                                 <p class="small text-muted mb-3">{{ Str::limit($submission->tujuan, 50) }}</p>
                                 <!-- Action -->
-                                @if($submission->status == 'approved')
-                                    <a href="{{ route('submissions.pdf', $submission->id) }}" 
-                                       class="btn btn-success btn-sm rounded-pill w-100">
-                                        <i class="fas fa-download me-1"></i>Download
-                                    </a>
-                                @else
+                                @if($submission->status == 'approved' && $submission->admin_document_path)
+    <a href="{{ Storage::url('documents/'.$submission->admin_document_path) }}" 
+       class="btn btn-success btn-sm rounded-pill w-100"
+       target="_blank">
+        <i class="fas fa-download me-1"></i>Download Surat Balasan
+    </a>
+@else
                                     <button class="btn btn-secondary btn-sm rounded-pill w-100"
                                             data-bs-toggle="modal" 
                                             data-bs-target="#detail-{{ $submission->id }}">
@@ -283,7 +285,7 @@
                                         <a href="{{ Storage::url('documents/'.$submission->admin_document_path) }}" 
                                            class="btn btn-danger btn-sm rounded-pill w-100"
                                            target="_blank">
-                                            <i class="fas fa-download me-1"></i>Download
+                                            <i class="fas fa-download me-1"></i>Download Surat Balasan
                                         </a>
                                     @endif
                                 @else
