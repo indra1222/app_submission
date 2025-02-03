@@ -5,9 +5,6 @@
     <!-- Hero Section -->
     <div class="bg-gradient-primary text-white position-relative overflow-hidden py-5 px-4">
         <div class="position-absolute top-0 end-0 opacity-10">
-            <svg width="450" height="400" viewBox="0 0 200 200">
-                <path fill="currentColor" d="M45,-78.1C58.3,-71.2,69.1,-57.7,73.3,-42.7C77.5,-27.7,75.1,-11.2,73.7,5.3C72.3,21.8,71.9,38.2,64.4,50.8C56.9,63.4,42.4,72.1,26.9,75.7C11.4,79.2,-5.1,77.6,-20.2,72.5C-35.3,67.4,-49,58.8,-57.7,46.7C-66.4,34.7,-70.1,19.1,-70.9,3.8C-71.7,-11.5,-69.5,-26.5,-62.3,-38.7C-55,-50.9,-42.7,-60.3,-29.7,-67.5C-16.7,-74.7,-3.1,-79.7,10.9,-79.7C24.8,-79.7,31.7,-85,45,-78.1Z" transform="translate(100 100)" />
-            </svg>
         </div>
         
         <div class="row align-items-center position-relative">
@@ -16,13 +13,16 @@
                     <div class="bps-logo-wrapper me-4">
                         <img src="{{ asset('images/logo-bps.png') }}" alt="Logo BPS" class="bps-logo">
                     </div>
-                    <div class="border-start border-white border-opacity-25 ps-4">
-                        <h2 class="display-6 fw-bold mb-1">Selamat datang kembali!</h2>
-                        <p class="lead mb-0 opacity-75">{{ Auth::user()->name }}</p>
-                    </div>
+                        <div class="border-start border-white border-opacity-25 ps-4">
+                            <h2 class="display-6 fw-bold mb-1 typing-effect">Selamat datang kembali</h2>
+                            <p class="lead mb-0 opacity-75" style="animation-delay: 3.5s;">{{ Auth::user()->name }}</p>
+                        </div>
                 </div>
             </div>
             <div class="col-lg-4 text-lg-end">
+                <a href="{{ route('templates.index') }}" class="btn btn-light btn-lg rounded-pill px-4 shadow-sm hover-lift me-2">
+                    <i class="fas fa-file-alt me-2"></i>Template Surat
+                </a>
                 <form action="{{ route('logout') }}" method="POST" class="d-inline">
                     @csrf
                     <button type="submit" class="btn btn-light btn-lg rounded-pill px-4 shadow-sm hover-lift">
@@ -116,22 +116,6 @@
                                             <i class="fas fa-calendar-alt me-1"></i>
                                             {{ $submission->created_at->format('d M Y') }}
                                         </small>
-                                        <div class="dropdown">
-                                            <button class="btn btn-link btn-sm text-muted p-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                <i class="fas fa-ellipsis-v"></i>
-                                            </button>
-                                            <ul class="dropdown-menu dropdown-menu-end">
-                                                <li>
-                                                    <form action="{{ route('submissions.destroy', $submission->id) }}" method="POST" class="delete-form">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="submit" class="dropdown-item text-danger">
-                                                            <i class="fas fa-trash-alt me-2"></i>Hapus
-                                                        </button>
-                                                    </form>
-                                                </li>
-                                            </ul>
-                                        </div>
                                     </div>
                                 </div>
                                 <!-- Content -->
@@ -410,98 +394,344 @@
 
 <!-- Styles -->
 <style>
-.bg-gradient-primary {
-    background: linear-gradient(45deg, #4e73df, #224abe);
+/* ===== Base Styles ===== */
+/* CSS */
+/* CSS */
+.typing-effect {
+    overflow: hidden; /* Sembunyikan teks yang belum diketik */
+    white-space: nowrap; /* Jangan biarkan teks wrap */
+    border-right: 3px solid white; /* Cursor efek */
+    animation: typing 3s steps(40, end), blink-caret 0.75s step-end infinite;
 }
 
+@keyframes typing {
+    from {
+        width: 0;
+    }
+    to {
+        width: 100%;
+    }
+}
+
+@keyframes blink-caret {
+    from, to {
+        border-color: transparent;
+    }
+    50% {
+        border-color: white;
+    }
+}
+:root {
+    --primary: #4e73df;
+    --primary-dark: #224abe;
+    --success: #1cc88a;
+    --danger: #e74a3b;
+    --warning: #f6c23e;
+    --bg-light: #f8f9fc;
+    --bg-dark: #343a40;
+    --text-muted: rgba(0, 0, 0, 0.6);
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--bg-light);
+    margin: 0;
+    padding: 0;
+    color: var(--text-muted);
+}
+
+/* ===== Layout & Container ===== */
+.bg-gradient-primary {
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    box-shadow: 0 4px 15px rgba(78, 115, 223, 0.2);
+    color: white;
+    animation: gradientShift 5s ease infinite;
+}
+
+@keyframes gradientShift {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+.container-dashboard {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+}
+
+/* ===== Logo Styles ===== */
 .bps-logo {
     height: 64px;
     width: auto;
+    transition: transform 0.3s ease, filter 0.3s ease;
+    filter: brightness(0.95);
+    animation: logoSpin 5s linear infinite;
+}
+
+@keyframes logoSpin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(0deg);
+    }
+}
+
+.bps-logo:hover {
+    transform: scale(1.1);
+    filter: brightness(1);
+    animation: none;
 }
 
 .bps-logo-wrapper {
-    background: rgba(255, 255, 255, 0.1);
+    background: rgb(255, 255, 255);
     padding: 1rem;
     border-radius: 1rem;
     backdrop-filter: blur(10px);
-}
-
-.shadow-hover {
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.2);
     transition: all 0.3s ease;
 }
 
-.shadow-hover:hover {
-    box-shadow: 0 1rem 3rem rgba(0,0,0,.175)!important;
+.bps-logo-wrapper:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: translateY(-4px);
 }
 
-.transform-hover {
-    transition: transform 0.3s ease;
+/* ===== Card Effects ===== */
+.card {
+    border-radius: 1rem;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    background: white;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    animation: cardEntrance 0.5s ease-out;
 }
 
-.transform-hover:hover {
+@keyframes cardEntrance {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.card:hover {
     transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
 }
 
-.hover-lift {
-    transition: transform 0.2s ease;
+.card-header {
+    padding: 1rem;
+    background: var(--primary);
+    color: white;
+    font-weight: bold;
 }
 
-.hover-lift:hover {
-    transform: translateY(-2px);
+.card-body {
+    padding: 1rem;
+    color: var(--text-muted);
 }
 
+/* ===== Buttons ===== */
+.btn-primary {
+    background: var(--primary);
+    color: white;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-primary::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 300%;
+    height: 300%;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    transition: transform 0.5s ease;
+}
+
+.btn-primary:hover::after {
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.btn-primary:hover {
+    background: var(--primary-dark);
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(78, 115, 223, 0.3);
+}
+
+/* ===== Icon Box ===== */
 .icon-box {
-    width: 48px;
-    height: 48px;
+    width: 56px;
+    height: 56px;
     display: flex;
     align-items: center;
     justify-content: center;
+    border-radius: 50%;
+    background: var(--primary);
+    color: white;
+    box-shadow: 0 4px 10px rgba(78, 115, 223, 0.2);
+    transition: all 0.3s ease;
+    animation: iconFloat 3s ease-in-out infinite;
 }
 
-.bg-primary-subtle { background-color: rgba(78, 115, 223, 0.1); }
-.bg-success-subtle { background-color: rgba(40, 167, 69, 0.1); }
-.bg-danger-subtle { background-color: rgba(220, 53, 69, 0.1); }
-.bg-warning-subtle { background-color: rgba(255, 193, 7, 0.1); }
-
-.submission-list {
-    max-height: 600px;
-    overflow-y: auto;
-    scrollbar-width: thin;
-    scrollbar-color: rgba(0,0,0,0.2) transparent;
+@keyframes iconFloat {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
 }
 
-.submission-list::-webkit-scrollbar {
-    width: 6px;
+.icon-box:hover {
+    background: var(--primary-dark);
+    transform: rotate(15deg) scale(1.1);
+    box-shadow: 0 6px 15px rgba(78, 115, 223, 0.3);
+    animation: none;
 }
 
-.submission-list::-webkit-scrollbar-track {
-    background: transparent;
+/* ===== Badge Styles ===== */
+.badge {
+    display: inline-block;
+    padding: 0.4em 0.8em;
+    font-size: 0.75rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: white;
+    border-radius: 1rem;
+    transition: all 0.3s ease;
+    animation: badgePulse 2s infinite;
 }
 
-.submission-list::-webkit-scrollbar-thumb {
-    background-color: rgba(0,0,0,0.2);
-    border-radius: 3px;
+@keyframes badgePulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
 }
 
+.badge-primary {
+    background: var(--primary);
+}
+
+.badge-primary:hover {
+    background: var(--primary-dark);
+    transform: scale(1.1);
+    animation: none;
+}
+/* ===== Dropdown Menu ===== */
 .dropdown-menu {
-    min-width: 120px;
-    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
-    border: none;
-    border-radius: 0.5rem;
+    min-width: 150px;
+    padding: 0.5rem;
+    border-radius: 1rem;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    animation: dropdownSlide 0.3s ease;
+}
+
+@keyframes dropdownSlide {
+    from {
+        opacity: 0;
+        transform: translateY(-15px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .dropdown-item {
-    padding: 0.5rem 1rem;
-    font-size: 0.875rem;
+    padding: 0.625rem 1rem;
+    border-radius: 0.5rem;
+    color: var(--text-muted);
+    transition: background 0.2s ease, transform 0.2s ease;
 }
 
 .dropdown-item:hover {
-    background-color: #f8f9fa;
+    background: var(--bg-light);
+    transform: translateX(5px);
 }
 
-.dropdown-item.text-danger:hover {
-    background-color: #dc3545;
-    color: white !important;
+/* ===== Scrollbar Styles ===== */
+.submission-list {
+    max-height: 600px;
+    overflow-y: auto;
+    padding-right: 8px;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
+}
+
+.submission-list::-webkit-scrollbar {
+    width: 8px;
+}
+
+.submission-list::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.3);
+    border-radius: 4px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.submission-list::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(0, 0, 0, 0.5);
+    transform: scale(1.2);
+}
+
+/* ===== Utility Classes ===== */
+.transition-all {
+    transition: all 0.3s ease;
+}
+
+.hover-scale {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hover-scale:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.shadow-soft {
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease;
+}
+
+.shadow-soft:hover {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.shadow-medium {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    transition: box-shadow 0.3s ease;
+}
+
+.shadow-medium:hover {
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.shadow-large {
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    transition: box-shadow 0.3s ease;
+}
+
+.shadow-large:hover {
+    box-shadow: 0 15px 45px rgba(0, 0, 0, 0.4);
 }
 </style>
 

@@ -159,5 +159,5 @@
         Jalan Pembangunan No. 222 Tarogong Kidul, Garut, Jawa Barat - Indonesia Kode Pos 44151<br>
         Telp.: (0262) 233273 Fax: (0262) 4893051 e-mail: bps5205@bps.go.id homepage: garutkab.bps.go.id
     </div>
-</body>
+</body> 
 </html>

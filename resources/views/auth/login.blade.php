@@ -7,11 +7,10 @@
         <div class="row justify-content-center align-items-center min-vh-100">
             <div class="col-md-6 col-lg-4">
                 <div class="login-card">
-                        
                     <div class="card-body p-4">
                         <div class="text-center mb-4">
                             <h3 class="fw-bold text-primary">Badan Pusat Statistik</h3>
-                            <p class="text-muted">Selamat datang kembali! Silakan masuk ke akun Anda</p>
+                            <p id="typing-text" class="text-muted"></p>
                         </div>
 
                         <form method="POST" action="{{ route('login') }}" class="login-form">
@@ -28,7 +27,8 @@
                                            class="form-control @error('email') is-invalid @enderror"
                                            placeholder="nama@bps.go.id"
                                            value="{{ old('email') }}"
-                                           required>
+                                           required
+                                           style="background-color: rgba(255, 255, 255, 0.5);">
                                 </div>
                                 @error('email')
                                     <div class="invalid-feedback">{{ $message }}</div>
@@ -36,7 +36,7 @@
                             </div>
 
                             <div class="form-group mb-4">
-                                <label class="form-label">password</label>
+                                <label class="form-label">Password</label>
                                 <div class="input-group input-group-merge">
                                     <span class="input-group-text">
                                         <i class="fas fa-lock"></i>
@@ -45,7 +45,8 @@
                                            name="password"
                                            class="form-control @error('password') is-invalid @enderror"
                                            placeholder="Masukkan password Anda"
-                                           required>
+                                           required
+                                           style="background-color: rgba(255, 255, 255, 0.5);">
                                     <span class="input-group-text cursor-pointer toggle-password">
                                         <i class="fas fa-eye"></i>
                                     </span>
@@ -71,11 +72,11 @@
 
 <style>
 :root {
-    --primary-color: #2575fc;
-    --primary-dark: #1a5bbf;
-    --secondary-color: #6b11cb;
-    --card-bg: rgba(255, 255, 255, 0.95);
-    --input-bg: #f8f9fa;
+    --primary-color:rgba(37, 116, 252, 0);
+    --primary-dark:rgba(26, 92, 191, 0);
+    --secondary-color:rgba(107, 17, 203, 0);
+    --card-bg: rgba(255, 255, 255, 0);
+    --input-bg: rgba(255, 255, 255, 0); /* Transparent input background */
 }
 
 .login-wrapper {
@@ -103,20 +104,6 @@
     z-index: 0;
 }
 
-.login-wrapper::before {
-    content: "";
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: radial-gradient(circle, 
-        rgba(37, 116, 252, 0.03) 0%,
-        rgba(107, 17, 203, 0.03) 100%);
-    animation: rotate 30s linear infinite;
-    z-index: 0;
-}
-
 .login-card {
     position: relative;
     background: var(--card-bg);
@@ -132,10 +119,6 @@
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
 }
 
-
-
-/* Rest of the existing styles remain the same */
-
 @keyframes rotate {
     from {
         transform: rotate(0deg);
@@ -145,14 +128,9 @@
     }
 }
 
-/* Responsive Adjustments */
 @media (max-width: 768px) {
     .login-card {
         margin: 1rem;
-    }
-    
-    .brand-logo img {
-        max-width: 60px;
     }
 
     .background-logo {
@@ -164,6 +142,21 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+    // Typing effect for the welcome text
+    const typingText = document.getElementById('typing-text');
+    const text = "Selamat datang kembali! Silakan masuk ke akun Anda";
+    let index = 0;
+
+    function typeText() {
+        if (index < text.length) {
+            typingText.textContent += text.charAt(index);
+            index++;
+            setTimeout(typeText, 50); // Adjust typing speed (in milliseconds)
+        }
+    }
+
+    typeText();
+
     // Toggle password visibility
     const togglePassword = document.querySelector('.toggle-password');
     const passwordInput = document.querySelector('input[type="password"]');
@@ -177,7 +170,7 @@ document.addEventListener('DOMContentLoaded', function() {
         icon.classList.toggle('fa-eye');
         icon.classList.toggle('fa-eye-slash');
     });
-    
+
     // Add loading state to button on form submit
     const form = document.querySelector('.login-form');
     const button = form.querySelector('.login-btn');

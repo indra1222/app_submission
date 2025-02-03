@@ -224,7 +224,185 @@
         </div>
     </div>
 </div>
+<style>
+/* Global Styles */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f7fc;
+    color: #333;
+}
 
+/* Container */
+.container-fluid {
+    max-width: 1400px;
+    margin: auto;
+    padding: 20px;
+}
+
+/* Back to Dashboard Button */
+.btn-outline-primary {
+    border: 2px solid #007bff;
+    color: #007bff;
+    border-radius: 30px;
+    transition: all 0.3s;
+}
+
+.btn-outline-primary:hover {
+    background-color: #007bff;
+    color: white;
+}
+
+/* Card Styles */
+.card {
+    background-color: white;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
+    border: none;
+    transition: all 0.3s;
+}
+
+.card:hover {
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+.card-header {
+    background: linear-gradient(135deg, #2575fc, #2575fc);
+    color: white;
+    padding: 20px;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+}
+
+.card-body {
+    padding: 30px;
+}
+
+/* Table Styles */
+.table-hover {
+    border-radius: 10px;
+}
+
+.table thead {
+    background-color: #f9f9f9;
+}
+
+.table th, .table td {
+    padding: 12px;
+    text-align: left;
+}
+
+.table td {
+    vertical-align: middle;
+}
+
+.table tr:hover {
+    background-color: #2575fc;
+}
+
+.table td i {
+    font-size: 1.1rem;
+}
+
+/* Status Badge */
+.badge {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.875rem;
+}
+
+.badge-info {
+    background-color: #17a2b8;
+    color: white;
+}
+
+.badge-success {
+    background-color: #28a745;
+    color: white;
+}
+
+.badge-danger {
+    background-color: #dc3545;
+    color: white;
+}
+
+/* Form Styles */
+.form-select, .form-control {
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.form-control-sm {
+    padding: 8px;
+}
+
+button[type="submit"] {
+    background-color: #007bff;
+    border-radius: 25px;
+    padding: 8px 16px;
+    color: white;
+    font-weight: bold;
+    border: none;
+    transition: background-color 0.3s;
+}
+
+button[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+/* Modal Styles */
+.modal-content {
+    border-radius: 15px;
+}
+
+.modal-header {
+    background-color: #007bff;
+    color: white;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+}
+
+/* Avatar */
+.avatar-sm {
+    width: 40px;
+    height: 40px;
+    font-size: 1.5rem;
+}
+
+/* Empty State */
+.empty-state {
+    text-align: center;
+    padding: 40px 0;
+}
+
+.empty-state-icon {
+    background-color: #e9ecef;
+}
+
+.empty-state h5 {
+    font-weight: bold;
+    color: #6c757d;
+}
+
+.empty-state p {
+    color: #6c757d;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .card-body {
+        padding: 15px;
+    }
+
+    .table td, .table th {
+        padding: 8px;
+    }
+
+    .avatar-sm {
+        width: 35px;
+        height: 35px;
+    }
+}
+</style>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     document.querySelectorAll('.status-form').forEach(form => {

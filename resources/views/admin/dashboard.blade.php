@@ -5,9 +5,6 @@
     <!-- Header Section -->
     <div class="bg-gradient-primary text-white position-relative overflow-hidden py-4 px-4 mb-4">
         <div class="position-absolute top-0 end-0 opacity-10">
-            <svg width="450" height="400" viewBox="0 0 200 200">
-                <path fill="currentColor" d="M45,-78.1C58.3,-71.2,69.1,-57.7,73.3,-42.7C77.5,-27.7,75.1,-11.2,73.7,5.3C72.3,21.8,71.9,38.2,64.4,50.8C56.9,63.4,42.4,72.1,26.9,75.7C11.4,79.2,-5.1,77.6,-20.2,72.5C-35.3,67.4,-49,58.8,-57.7,46.7C-66.4,34.7,-70.1,19.1,-70.9,3.8C-71.7,-11.5,-69.5,-26.5,-62.3,-38.7C-55,-50.9,-42.7,-60.3,-29.7,-67.5C-16.7,-74.7,-3.1,-79.7,10.9,-79.7C24.8,-79.7,31.7,-85,45,-78.1Z" transform="translate(100 100)" />
-            </svg>
         </div>
         
         <div class="row align-items-center position-relative">
@@ -160,16 +157,6 @@
                             <i class="fas fa-list me-2"></i> Manage Submissions
                         </a>
                     </div>
-                    <div class="col-md-4">
-                        <button class="btn btn-success w-100 rounded-pill py-3 shadow-sm hover-lift" disabled>
-                            <i class="fas fa-user-plus me-2"></i> Add New User
-                        </button>
-                    </div>
-                    <div class="col-md-4">
-                        <button class="btn btn-info w-100 rounded-pill py-3 shadow-sm hover-lift text-white" disabled>
-                            <i class="fas fa-cog me-2"></i> Settings
-                        </button>
-                    </div>
                 </div>
             </div>
         </div>
@@ -177,85 +164,188 @@
 </div>
 
 <style>
+/* Gradient background */
+/* ===== Global Styles ===== */
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color:rgba(253, 253, 253, 0.37);
+    color: #333;
+}
+
+/* ===== Header Section ===== */
 .bg-gradient-primary {
-    background: linear-gradient(45deg, #4e73df, #224abe);
+    background: linear-gradient(45deg, #2575fc, #224abe);
+    position: relative;
+    overflow: hidden;
 }
 
-.bg-gradient-purple {
-    background: linear-gradient(45deg, #6a11cb, #2575fc);
+.bg-gradient-primary::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    background: rgb(#2575fc);
+    clip-path: polygon(100% 0, 0 100%, 100% 100%);
+    z-index: 1;
 }
 
-.bg-gradient-orange {
-    background: linear-gradient(45deg, #ff9a9e, #fad0c4);
+.bg-gradient-primary .row {
+    position: relative;
+    z-index: 2;
 }
 
-.bg-gradient-green {
-    background: linear-gradient(45deg, #00b09b, #96c93d);
+.bps-logo-wrapper {
+    background: rgba(255, 255, 255, 0.94);
+    padding: 0.75rem;
+    border-radius: 0.75rem;
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
 }
 
-.bg-gradient-blue {
-    background: linear-gradient(45deg, #4facfe, #00f2fe);
-}
-
-.bg-gradient-indigo {
-    background: linear-gradient(45deg, #6366f1, #a855f7);
-}
-
-.bg-gradient-cyan {
-    background: linear-gradient(45deg, #0ea5e9, #22d3ee);
+.bps-logo-wrapper:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-5px);
 }
 
 .bps-logo {
     height: 48px;
     width: auto;
+    transition: transform 0.3s ease;
 }
 
-.bps-logo-wrapper {
+.bps-logo:hover {
+    transform: scale(1.1);
+}
+
+.border-start {
+    border-left: 2px solid rgba(255, 255, 255, 0.25) !important;
+}
+
+.btn-light {
     background: rgba(255, 255, 255, 0.1);
-    padding: 0.75rem;
-    border-radius: 0.75rem;
-    backdrop-filter: blur(10px);
+    border: none;
+    color: white;
+    transition: all 0.3s ease;
+}
+
+.btn-light:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-3px);
+}
+
+/* ===== Stats Cards ===== */
+.card {
+    border: none;
+    border-radius: 1rem;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.bg-gradient-purple {
+    background: linear-gradient(45deg, #2575fc, #2575fc);
+}
+
+.bg-gradient-blue {
+    background: linear-gradient(45deg, #2575fc, #2575fc);
+}
+
+.bg-gradient-green {
+    background: linear-gradient(45deg, #2575fc, #2575fc);
+}
+
+.bg-gradient-indigo {
+    background: linear-gradient(45deg, #2575fc, #2575fc);
+}
+
+.bg-gradient-cyan {
+    background: linear-gradient(45deg, #2575fc, #2575fc);
 }
 
 .icon-box {
     width: 48px;
     height: 48px;
-    background: rgba(255, 255, 255, 0.2);
     display: flex;
     align-items: center;
     justify-content: center;
-}
-
-.shadow-hover {
+    border-radius: 0.75rem;
+    background: rgba(255, 255, 255, 0.2);
     transition: all 0.3s ease;
 }
 
-.shadow-hover:hover {
-    box-shadow: 0 1rem 3rem rgba(0,0,0,.175)!important;
+.icon-box:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: rotate(15deg) scale(1.1);
 }
 
-.transform-hover {
+/* ===== Quick Actions ===== */
+.quick-actions .btn {
+    font-weight: 600;
+    font-size: 1rem;
+    padding: 1rem;
+    transition: all 0.3s ease;
+}
+
+.quick-actions .btn:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* ===== Animations ===== */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in {
+    animation: fadeIn 0.5s ease-out;
+}
+
+/* ===== Utility Classes ===== */
+.hover-lift {
     transition: transform 0.3s ease;
 }
 
-.transform-hover:hover {
+.hover-lift:hover {
     transform: translateY(-5px);
 }
 
-.hover-lift {
-    transition: transform 0.2s ease;
+.shadow-hover {
+    transition: box-shadow 0.3s ease;
 }
 
-.hover-lift:hover {
-    transform: translateY(-2px);
+.shadow-hover:hover {
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2) !important;
 }
 
 .rounded-4 {
     border-radius: 1rem !important;
 }
 
-.card {
-    overflow: hidden;
+/* ===== Scrollbar Styles ===== */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.3);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(0, 0, 0, 0.5);
 }
 </style>
 @endsection
