@@ -13,9 +13,9 @@ class DatabaseSeeder extends Seeder
         // Buat akun admin jika belum ada
         if (!User::where('email', 'admin@admin.com')->exists()) {
             User::create([
-                'name' => 'Administrator',
-                'email' => 'admin@admin.com',
-                'password' => Hash::make('admin123'),
+                'name' => 'Admin',
+                'email' => 'admin3205@gmail.com',
+                'password' => Hash::make('garutkab3205'),
                 'role' => 'admin',
                 'account_limit' => null,
                 'accounts_created' => 0,
@@ -25,39 +25,39 @@ class DatabaseSeeder extends Seeder
         // Array untuk menyimpan user yang akan dibuat
         $users = [
             [
-                'name' => 'User One',
-                'email' => 'user1@example.com',
-                'password' => 'password1'
+                'name' => 'PPK 3205',
+                'email' => 'ppk3205@gmail.com',
+                'password' => 'garutkab3205'
             ],
             [
-                'name' => 'User Two',
-                'email' => 'user2@example.com',
-                'password' => 'password2'
+                'name' => 'Umum 3205',
+                'email' => 'umum3205@gmail.com',
+                'password' => 'garutkab3205'
             ],
             [
-                'name' => 'User Three',
-                'email' => 'user3@example.com',
-                'password' => 'password3'
+                'name' => 'Sosial 3205',
+                'email' => 'sosial3205@gmail.com',
+                'password' => 'garutkab3205'
             ],
             [
-                'name' => 'User Four',
-                'email' => 'user4@example.com',
-                'password' => 'password4'
+                'name' => 'Produksi 3205',
+                'email' => 'produksi3205@gmail.com',
+                'password' => 'garutkab3205'
             ],
             [
-                'name' => 'User Five',
-                'email' => 'user5@example.com',
-                'password' => 'password5'
+                'name' => 'Distribusi 3205',
+                'email' => 'distribusi3205@gmail.com',
+                'password' => 'garutkab3205'
             ],
             [
-                'name' => 'User Six',
-                'email' => 'user6@example.com',
-                'password' => 'password6'
+                'name' => 'Nerwilis 3205',
+                'email' => 'nerwilis3205@gmail.com',
+                'password' => 'garutkab3205'
             ],
             [
-                'name' => 'User Seven',
-                'email' => 'user7@example.com',
-                'password' => 'password7'
+                'name' => 'IPDS 3205',
+                'email' => 'ipds3205@gmail.com',
+                'password' => 'garutkab3205'
             ],
         ];
 

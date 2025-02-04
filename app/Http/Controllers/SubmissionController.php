@@ -124,7 +124,7 @@ class SubmissionController extends Controller
                 default => 'Form berhasil dikirim!'
             };
 
-            return redirect()->route('submissions.index')->with('success', $pesan);
+            return redirect()->route('user.dashboard')->with('success', 'Pengajuan berhasil dikirim!');
 
         } catch (Exception $e) {
             DB::rollBack();

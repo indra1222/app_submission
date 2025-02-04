@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('jangka_waktu')->nullable(); // Boleh kosong
             $table->enum('jenis_form', ['form1', 'form2', 'form3']);
             $table->enum('status', ['pending', 'approved', 'rejected'])->default('pending');
+            $table->text('admin_remarks')->nullable();
             $table->timestamps();
         });
     }

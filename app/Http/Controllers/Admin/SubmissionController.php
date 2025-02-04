@@ -21,8 +21,13 @@ class SubmissionController extends Controller
    {
        $validated = $request->validate([
            'status' => 'required|in:pending,approved,rejected',
-           'admin_document' => 'nullable|file|mimes:pdf|max:2048' 
+           'admin_document' => 'nullable|file|mimes:pdf|max:2048',
+           'admin_remarks' => 'nullable|string|max:500' // Tambahkan validasi untuk remarks
+ 
        ]);
+       
+       $submission->admin_remarks = $request->admin_remarks;
+
 
        // Tambahkan kondisi untuk semua form type
        if ($request->hasFile('admin_document')) {

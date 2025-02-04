@@ -8,11 +8,14 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\TemplateController;
 use App\Http\Controllers\PedomanController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
+
 
 // Redirect root to login
 Route::get('/', function () {
-    return redirect()->route('login');
+    return Auth::check() ? redirect()->route('user.dashboard') : redirect()->route('login');
 });
+
 
 // Authentication Routes
 Route::middleware('guest')->group(function () {

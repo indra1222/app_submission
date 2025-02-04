@@ -17,6 +17,7 @@ class Submission extends Model
         'jangka_waktu',
         'status',
         'document_path',
+        'admin_remarks',
         'admin_document_path'
     ];
     
