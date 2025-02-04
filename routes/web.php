@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\SubmissionController as AdminSubmissionController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\TemplateController;
+use App\Http\Controllers\PedomanController;
 use Illuminate\Support\Facades\Route;
 
 // Redirect root to login
@@ -28,15 +29,17 @@ Route::middleware(['auth'])->group(function () {
     // Dashboard
     Route::get('/dashboard', [UserDashboardController::class, 'index'])
         ->name('user.dashboard');
-    
+        
     Route::get('/submissions/{submission}/pdf', [UserDashboardController::class, 'downloadPDF'])
         ->name('submissions.pdf');
 
-// Templates
-Route::get('/templates', [TemplateController::class, 'index'])->name('templates.index');
-Route::get('/templates/download/sppd', [TemplateController::class, 'downloadSPPD'])->name('templates.download.sppd');
-Route::get('/templates/download/kuitansi', [TemplateController::class, 'downloadKuitansi'])->name('templates.download.kuitansi');
-
+    // Templates
+    Route::get('/templates', [TemplateController::class, 'index'])->name('templates.index');
+    Route::get('/templates/download/sppd', [TemplateController::class, 'downloadSPPD'])->name('templates.download.sppd');
+    Route::get('/templates/download/kuitansi', [TemplateController::class, 'downloadKuitansi'])->name('templates.download.kuitansi');
+    
+    // Pedoman Routes
+    Route::get('/pedoman', [PedomanController::class, 'index'])->name('pedoman.index');
 
     // Submissions
     Route::controller(SubmissionController::class)->group(function () {
@@ -72,7 +75,7 @@ Route::middleware(['auth', 'admin'])
             Route::get('/surat-masuk', 'suratMasuk')->name('surat-masuk');
             Route::get('/surat-keluar', 'suratKeluar')->name('surat-keluar');
         });
-
+        
         // Submissions Management
         Route::controller(AdminSubmissionController::class)->group(function () {
             Route::get('/submissions', 'index')->name('submissions.index');

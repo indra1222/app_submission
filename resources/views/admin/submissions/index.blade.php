@@ -66,47 +66,53 @@
                                 <td>
                                     @switch($submission->jenis_form)
                                         @case('form1')
-                                            <span class="badge bg-info text-white px-3 py-2 rounded-pill">Letter Request</span>
+                                            <span class="badge bg-info text-white px-3 py-2 rounded-pill">surat tugas</span>
                                             @break
                                         @case('form2')
-                                            <span class="badge bg-success text-white px-3 py-2 rounded-pill">ID Application</span>
+                                            <span class="badge bg-success text-white px-3 py-2 rounded-pill">sppd</span>
                                             @break
                                         @default
-                                            <span class="badge bg-danger text-white px-3 py-2 rounded-pill">Complaint</span>
+                                            <span class="badge bg-danger text-white px-3 py-2 rounded-pill">kuitansi</span>
                                     @endswitch
                                 </td>
                                 <td class="text-truncate text-muted" style="max-width: 200px;">{{ $submission->nama }}</td>
-                                <td>
-                                    <form action="{{ route('admin.submissions.status', $submission) }}" 
-                                        method="POST" 
-                                        class="status-form"
-                                        enctype="multipart/form-data">
-                                        @csrf
-                                        @method('PATCH')
-                                        <div class="d-flex flex-column gap-2">
-                                            <select name="status" class="form-select form-select-sm border-0 shadow-sm transition-all text-white 
-                                                @if($submission->status == 'pending') bg-warning 
-                                                @elseif($submission->status == 'approved') bg-success 
-                                                @else bg-danger @endif" 
-                                                    data-previous-value="{{ $submission->status }}">
-                                                @foreach(['pending' => 'Pending', 'approved' => 'Approved', 'rejected' => 'Rejected'] as $value => $label)
-                                                    <option value="{{ $value }}" 
-                                                        {{ $submission->status == $value ? 'selected' : '' }}>
-                                                        {{ $label }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
+                                <!-- Inside the status form in the table -->
+<td>
+    <form action="{{ route('admin.submissions.status', $submission) }}" 
+        method="POST" 
+        class="status-form"
+        enctype="multipart/form-data">
+        @csrf
+        @method('PATCH')
+        <div class="d-flex flex-column gap-2">
+            <select name="status" class="form-select form-select-sm border-0 shadow-sm transition-all text-white 
+                @if($submission->status == 'pending') bg-warning 
+                @elseif($submission->status == 'approved') bg-success 
+                @else bg-danger @endif" 
+                data-previous-value="{{ $submission->status }}">
+                @foreach(['pending' => 'Pending', 'approved' => 'Approved', 'rejected' => 'Rejected'] as $value => $label)
+                    <option value="{{ $value }}" {{ $submission->status == $value ? 'selected' : '' }}>
+                        {{ $label }}
+                    </option>
+                @endforeach
+            </select>
 
-                                            <input type="file" name="admin_document" 
-                                                class="form-control form-control-sm transition-all border-primary" 
-                                                accept=".pdf">
-                                                
-                                            <button type="submit" class="btn btn-sm btn-primary mt-1 transition-all">
-                                                <i class="fas fa-paper-plane me-1"></i> Update & Send
-                                            </button>
-                                        </div>
-                                    </form>
-                                </td>
+            <!-- Add remarks textarea -->
+            <textarea name="admin_remarks" 
+                     class="form-control form-control-sm" 
+                     placeholder="Add remarks for user..."
+                     rows="2">{{ $submission->admin_remarks }}</textarea>
+
+            <input type="file" name="admin_document" 
+                class="form-control form-control-sm transition-all border-primary" 
+                accept=".pdf">
+                
+            <button type="submit" class="btn btn-sm btn-primary mt-1 transition-all">
+                <i class="fas fa-paper-plane me-1"></i> Update & Send
+            </button>
+        </div>
+    </form>
+</td>
                                 <td class="text-center">
                                     <div class="d-flex flex-column gap-2">
                                         @if($submission->document_path)
@@ -150,56 +156,43 @@
 
                             <!-- Detail Modal -->
                             <div class="modal fade" id="detail-{{ $submission->id }}" tabindex="-1">
-                                <div class="modal-dialog modal-dialog-centered modal-lg">
-                                    <div class="modal-content">
-                                        <div class="modal-header bg-primary text-white">
-                                            <h5 class="modal-title">Submission Details</h5>
-                                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <dl class="row">
-                                                <dt class="col-sm-4 text-primary">Applicant Name</dt>
-                                                <dd class="col-sm-8 text-dark">{{ $submission->nama }}</dd>
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title">Submission Details</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <dl class="row">
+                    <dt class="col-sm-4 text-primary">Applicant Name</dt>
+                    <dd class="col-sm-8 text-dark">{{ $submission->nama }}</dd>
 
-                                                <dt class="col-sm-4 text-primary">Submission Date</dt>
-                                                <dd class="col-sm-8 text-muted">{{ $submission->created_at->format('d M Y, H:i') }}</dd>
+                    <dt class="col-sm-4 text-primary">Submission Date</dt>
+                    <dd class="col-sm-8 text-muted">{{ $submission->created_at->format('d M Y, H:i') }}</dd>
 
-                                                <dt class="col-sm-4 text-primary">Form Type</dt>
-                                                <dd class="col-sm-8">
-                                                    @switch($submission->jenis_form)
-                                                        @case('form1')
-                                                            <span class="badge bg-info text-white">Letter Request</span>
-                                                            @break
-                                                        @case('form2')
-                                                            <span class="badge bg-success text-white">ID Application</span>
-                                                            @break
-                                                        @default
-                                                            <span class="badge bg-danger text-white">Complaint</span>
-                                                    @endswitch
-                                                </dd>
+                    <dt class="col-sm-4 text-primary">Status</dt>
+                    <dd class="col-sm-8">
+                        @php
+                            $statusClass = match($submission->status) {
+                                'approved' => 'success',
+                                'pending' => 'warning',
+                                default => 'danger'
+                            };
+                        @endphp
+                        <span class="badge bg-{{ $statusClass }} text-white px-3 py-2">
+                            {{ ucfirst($submission->status) }}
+                        </span>
+                    </dd>
 
-                                                <dt class="col-sm-4 text-primary">Address</dt>
-                                                <dd class="col-sm-8 text-muted">{{ $submission->alamat }}</dd>
-
-                                                @if($submission->jenis_form == 'form3')
-                                                    <dt class="col-sm-4 text-primary">Documents</dt>
-                                                    <dd class="col-sm-8">
-                                                        @if($submission->document_path)
-                                                            <a href="{{ Storage::url('documents/'.$submission->document_path) }}"
-                                                            class="btn btn-sm btn-outline-info me-2 transition-all"
-                                                            target="_blank">
-                                                                <i class="fas fa-file-pdf me-1"></i>User Document
-                                                            </a>
-                                                        @endif
-                                                        @if($submission->admin_document_path)
-                                                            <a href="{{ Storage::url('documents/'.$submission->admin_document_path) }}"
-                                                            class="btn btn-sm btn-outline-success transition-all"
-                                                            target="_blank">
-                                                                <i class="fas fa-file-pdf me-1"></i>Admin Response
-                                                            </a>
-                                                        @endif
-                                                    </dd>
-                                                @endif
+                    @if($submission->admin_remarks)
+                    <dt class="col-sm-4 text-primary">Admin Remarks</dt>
+                    <dd class="col-sm-8">
+                        <div class="alert alert-info py-2 px-3 mb-0">
+                            <i class="fas fa-info-circle me-2"></i>
+                            {{ $submission->admin_remarks }}
+                        </div>
+                    </dd>
+                    @endif
                                             </dl>
                                         </div>
                                     </div>
@@ -231,6 +224,23 @@ body {
     background-color: #f4f7fc;
     color: #333;
 }
+
+.form-control:focus {
+    border-color: #2575fc;
+    box-shadow: 0 0 0 0.2rem rgba(37, 117, 252, 0.25);
+}
+
+textarea.form-control-sm {
+    font-size: 0.875rem;
+    min-height: 60px;
+}
+
+.alert-info {
+    background-color: rgba(37, 117, 252, 0.1);
+    border: 1px solid rgba(37, 117, 252, 0.2);
+    border-radius: 8px;
+    color: #0056b3;
+}   
 
 /* Container */
 .container-fluid {
@@ -408,6 +418,7 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelectorAll('.status-form').forEach(form => {
         const select = form.querySelector('select');
         const fileInput = form.querySelector('input[type="file"]');
+        const remarkInput = form.querySelector('textarea[name="admin_remarks"]');
         const submitButton = form.querySelector('button[type="submit"]');
         
         // Initially hide submit button
@@ -415,28 +426,31 @@ document.addEventListener('DOMContentLoaded', function() {
             submitButton.style.display = 'none';
         }
 
-        // Show/hide submit button based on file input
+        // Show submit button if there are any changes
+        const showSubmitIfChanged = () => {
+            if (submitButton) {
+                const hasFileChange = fileInput && fileInput.files.length > 0;
+                const hasRemarkChange = remarkInput && remarkInput.value.trim() !== remarkInput.defaultValue;
+                const hasStatusChange = select && select.value !== select.dataset.previousValue;
+                
+                submitButton.style.display = (hasFileChange || hasRemarkChange || hasStatusChange) ? 'block' : 'none';
+            }
+        };
+
+        // Add event listeners
         if (fileInput) {
-            fileInput.addEventListener('change', function() {
-                if (submitButton) {
-                    submitButton.style.display = this.files.length > 0 ? 'block' : 'none';
-                }
-            });
+            fileInput.addEventListener('change', showSubmitIfChanged);
+        }
+        if (remarkInput) {
+            remarkInput.addEventListener('input', showSubmitIfChanged);
+        }
+        if (select) {
+            select.addEventListener('change', showSubmitIfChanged);
         }
 
-        // Default status change behavior
-        select.addEventListener('change', function() {
-            if (fileInput && !fileInput.files.length) {
-                if (confirm(`Change status to "${this.value}"?`)) {
-                    form.submit();
-                } else {
-                    this.value = this.dataset.previousValue;
-                }
-            }
-        });
-
-        // Store initial value
-        select.dataset.previousValue = select.value;
+        // Store initial values
+        if (select) select.dataset.previousValue = select.value;
+        if (remarkInput) remarkInput.defaultValue = remarkInput.value;
     });
 });
 </script>

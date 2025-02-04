@@ -13,26 +13,53 @@
                     <div class="bps-logo-wrapper me-4">
                         <img src="{{ asset('images/logo-bps.png') }}" alt="Logo BPS" class="bps-logo">
                     </div>
-                        <div class="border-start border-white border-opacity-25 ps-4">
-                            <h2 class="display-6 fw-bold mb-1 typing-effect">Selamat datang kembali</h2>
-                            <p class="lead mb-0 opacity-75" style="animation-delay: 3.5s;">{{ Auth::user()->name }}</p>
-                        </div>
+                    <div class="border-start border-white border-opacity-25 ps-4">
+                        <h2 class="display-6 fw-bold mb-1 typing-effect">Selamat datang kembali</h2>
+                        <p class="lead mb-0 opacity-75" style="animation-delay: 3.5s;">{{ Auth::user()->name }}</p>
+                    </div>
                 </div>
             </div>
-            <div class="col-lg-4 text-lg-end">
-                <a href="{{ route('templates.index') }}" class="btn btn-light btn-lg rounded-pill px-4 shadow-sm hover-lift me-2">
-                    <i class="fas fa-file-alt me-2"></i>Template Surat
-                </a>
-                <form action="{{ route('logout') }}" method="POST" class="d-inline">
-                    @csrf
-                    <button type="submit" class="btn btn-light btn-lg rounded-pill px-4 shadow-sm hover-lift">
-                        <i class="fas fa-sign-out-alt me-2"></i>Keluar
-                    </button>
-                </form>
+            <div class="col-lg-4">
+                <div class="d-flex flex-wrap gap-2 justify-content-lg-end">
+                    <a href="{{ route('templates.index') }}" class="btn btn-light rounded-pill px-4 py-2 d-inline-flex align-items-center shadow-hover">
+                        <i class="fas fa-file-alt me-2"></i>Template
+                    </a>
+                    <a href="{{ route('pedoman.index') }}" class="btn btn-light rounded-pill px-4 py-2 d-inline-flex align-items-center shadow-hover">
+                        <i class="fas fa-book me-2"></i>Pedoman
+                    </a>
+                    <form action="{{ route('logout') }}" method="POST" class="d-inline">
+                        @csrf
+                        <button type="submit" class="btn btn-light rounded-pill px-4 py-2 d-inline-flex align-items-center shadow-hover">
+                            <i class="fas fa-sign-out-alt me-2"></i>Keluar
+                        </button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
+    <!-- Sisa kode tetap sama -->
+</div>
 
+<style>
+.shadow-hover {
+    transition: all 0.3s ease;
+}
+
+.shadow-hover:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+}
+
+.btn {
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+/* Menyesuaikan ukuran ikon */
+.btn i {
+    font-size: 1rem;
+}
+</style>
     <!-- Main Content -->
     <div class="container-fluid px-4 py-5">
         <div class="row g-4 mb-5">
@@ -333,60 +360,16 @@
                         <span class="badge bg-{{ $statusClass }}-subtle text-{{ $statusClass }} rounded-pill">
                             {{ ucfirst($submission->status) }}
                         </span>
-                    </dd>
-
-                    <dt class="col-sm-4">Jenis Form</dt>
-                    <dd class="col-sm-8">
-                        @switch($submission->jenis_form)
-                            @case('form1')
-                                Surat Tugas
-                                @break
-                            @case('form2')
-                                SPPD
-                                @break
-                            @default
-                                Kuitansi
-                        @endswitch
-                    </dd>
-
-                    <dt class="col-sm-4">Tanggal</dt>
-                    <dd class="col-sm-8">{{ $submission->created_at->format('d M Y H:i') }}</dd>
-
-                    <dt class="col-sm-4">Nama</dt>
-                    <dd class="col-sm-8">{{ $submission->nama }}</dd>
-
-                    @if($submission->jenis_form == 'form3')
-                        <dt class="col-sm-4">NIK</dt>
-                        <dd class="col-sm-8">{{ $submission->alamat }}</dd>
-                    @else
-                        <dt class="col-sm-4">Alamat</dt>
-                        <dd class="col-sm-8">{{ $submission->alamat }}</dd>
-                    @endif
-
-                    <dt class="col-sm-4">Tujuan</dt>
-                    <dd class="col-sm-8">{{ $submission->tujuan }}</dd>
-
-                    @if($submission->document_path || $submission->admin_document_path)
-                        <dt class="col-sm-4">Dokumen</dt>
-                        <dd class="col-sm-8">
-                            <div class="d-flex flex-column gap-2">
-                                @if($submission->document_path)
-                                    <a href="{{ Storage::url('documents/'.$submission->document_path) }}" 
-                                       class="btn btn-sm btn-outline-primary rounded-pill"
-                                       target="_blank">
-                                        <i class="fas fa-file-pdf me-1"></i>Lihat Dokumen
-                                    </a>
-                                @endif
-                                @if($submission->admin_document_path)
-                                    <a href="{{ Storage::url('documents/'.$submission->admin_document_path) }}" 
-                                       class="btn btn-sm btn-outline-success rounded-pill"
-                                       target="_blank">
-                                        <i class="fas fa-file-pdf me-1"></i>Lihat Balasan
-                                    </a>
-                                @endif
+                        
+                        @if($submission->admin_remarks)
+                            <div class="alert alert-light border mt-2 p-2 mb-0">
+                                <small class="d-block fw-bold text-muted mb-1">Keterangan Admin:</small>
+                                <p class="small mb-0">{{ $submission->admin_remarks }}</p>
                             </div>
-                        </dd>
-                    @endif
+                        @endif
+                    </dd>
+
+                    <!-- Rest of the modal content... -->
                 </dl>
             </div>
         </div>
@@ -405,6 +388,7 @@
     border-right: 3px solid white; /* Cursor efek */
     animation: typing 3s steps(40, end), blink-caret 0.75s step-end infinite;
 }
+
 
 @keyframes typing {
     from {
