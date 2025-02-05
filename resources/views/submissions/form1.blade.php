@@ -51,16 +51,15 @@
 
                         <div id="kepada-section">
                             <label class="form-label">Kepada</label>
-                            <div class="mb-3">
-                                <input type="text" name="kepada[0][nama]" class="form-control mb-2" placeholder="Nama"
-                                    required>
-                                <input type="text" name="kepada[0][nip_nik]" class="form-control mb-2"
-                                    placeholder="NIP/NIK" required>
-                                <input type="text" name="kepada[0][jabatan]" class="form-control mb-2"
-                                    placeholder="Jabatan" required>
+                            <div class="mb-3" id="kepada-form-container">
+                                <div class="kepada-form" data-index="0">
+                                    <input type="text" name="kepada[0][nama]" class="form-control mb-2" placeholder="Nama" required>
+                                    <input type="text" name="kepada[0][nip_nik]" class="form-control mb-2" placeholder="NIP/NIK" required>
+                                    <input type="text" name="kepada[0][jabatan]" class="form-control mb-2" placeholder="Jabatan" required>
+                                    <button type="button" class="btn btn-danger remove-kepada">Hapus</button>
+                                </div>
                             </div>
                         </div>
-
                         <button type="button" class="btn btn-secondary mb-3" id="add-kepada">Tambah Kepada</button>
 
                         <div class="mb-3">
@@ -98,17 +97,25 @@
 </div>
 
 <script>
-document.getElementById('add-kepada').addEventListener('click', function() {
-    const section = document.getElementById('kepada-section');
-    const index = section.querySelectorAll('div.mb-3').length;
-    const newFields = `
-            <div class="mb-3">
-                <input type="text" name="kepada[${index}][nama]" class="form-control mb-2" placeholder="Nama" required>
-                <input type="text" name="kepada[${index}][nip_nik]" class="form-control mb-2" placeholder="NIP/NIK" required>
-                <input type="text" name="kepada[${index}][jabatan]" class="form-control mb-2" placeholder="Jabatan" required>
-            </div>
-        `;
-    section.insertAdjacentHTML('beforeend', newFields);
-});
+    document.getElementById('add-kepada').addEventListener('click', function() {
+        const section = document.getElementById('kepada-section');
+        const index = section.querySelectorAll('.mb-3').length;
+        const newFields = `
+                <div class="mb-3">
+                    <input type="text" name="kepada[${index}][nama]" class="form-control mb-2" placeholder="Nama" required>
+                    <input type="text" name="kepada[${index}][nip_nik]" class="form-control mb-2" placeholder="NIP/NIK" required>
+                    <input type="text" name="kepada[${index}][jabatan]" class="form-control mb-2" placeholder="Jabatan" required>
+                    <button type="button" class="btn btn-danger remove-kepada">Hapus</button>
+                </div>
+            `;
+        section.insertAdjacentHTML('beforeend', newFields);
+    });
+
+    document.getElementById('kepada-section').addEventListener('click', function(event) {
+        if (event.target && event.target.classList.contains('remove-kepada')) {
+            const form = event.target.closest('.mb-3');
+            form.remove();
+        }
+    });
 </script>
 @endsection
