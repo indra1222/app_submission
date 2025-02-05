@@ -14,8 +14,8 @@
                         <img src="{{ asset('images/logo-bps.png') }}" alt="Logo BPS" class="bps-logo">
                     </div>
                     <div class="border-start border-white border-opacity-25 ps-4">
-                        <h4 class="fw-bold mb-1">Dashboard Admin</h4>
-                        <p class="mb-0 opacity-75">Sistem Informasi Form</p>
+                        <h4 class="fw-bold mb-1">Badan Pusat Statistik Kabupaten Garut</h4>
+                        <p class="mb-0 opacity-75">Dashboard Admin</p>
                     </div>
                 </div>
             </div>

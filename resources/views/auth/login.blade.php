@@ -2,14 +2,16 @@
 
 @section('content')
 <div class="login-wrapper">
-    <div class="background-logo"></div>
+    <div id="background-logo" class="background-logo"></div>
     <div class="container">
         <div class="row justify-content-center align-items-center min-vh-100">
             <div class="col-md-6 col-lg-4">
                 <div class="login-card">
                     <div class="card-body p-4">
                         <div class="text-center mb-4">
-                            <h3 class="fw-bold text-primary">Badan Pusat Statistik</h3>
+                            <h3 class="fw-bold text-primary">Badan Pusat Statistik<br>
+                                <span class="kabupaten-garut">Kabupaten Garut</span>
+                            </h3>
                             <p id="typing-text" class="text-muted"></p>
                         </div>
 
@@ -72,11 +74,60 @@
 
 <style>
 :root {
-    --primary-color:rgba(37, 116, 252, 0);
-    --primary-dark:rgba(26, 92, 191, 0);
-    --secondary-color:rgba(107, 17, 203, 0);
+    --primary-color: #2574fc;
+    --primary-dark: #1a5cbf;
+    --secondary-color: #6b11cb;
     --card-bg: rgba(255, 255, 255, 0);
-    --input-bg: rgba(255, 255, 255, 0); /* Transparent input background */
+    --input-bg: rgba(255, 255, 255, 0);
+}
+
+.kabupaten-garut {
+    display: inline-block;
+    font-size: 0.6em;
+    color: var(--primary-color);
+    background: linear-gradient(45deg, var(--primary-color), var(--primary-dark));
+    -webkit-background-clip: text;
+    background-clip: text;
+    text-fill-color: transparent;
+    -webkit-text-fill-color: transparent;
+    animation: shine 2s linear infinite;
+    background-size: 200% 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+@keyframes shine {
+    0% {
+        background-position: -100% 0;
+    }
+    100% {
+        background-position: 100% 0;
+    }
+}
+
+.kabupaten-garut::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg, 
+        transparent, 
+        rgba(255,255,255,0.3), 
+        transparent
+    );
+    animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+    0% {
+        left: -100%;
+    }
+    100% {
+        left: 100%;
+    }
 }
 
 .login-wrapper {
@@ -95,13 +146,13 @@
     transform: translate(-50%, -50%);
     width: 80vh;
     height: 80vh;
-    background-image: url("{{ asset('images/logo-bps.png') }}");
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain;
     opacity: 0.05;
     pointer-events: none;
     z-index: 0;
+    transition: background-image 1s ease-in-out;
 }
 
 .login-card {
@@ -119,15 +170,6 @@
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
 }
 
-@keyframes rotate {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
-}
-
 @media (max-width: 768px) {
     .login-card {
         margin: 1rem;
@@ -142,6 +184,40 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+    // Array of logo images (replace with your actual paths)
+    const logos = [
+        "{{ asset('images/logo-bps.png') }}",
+        "{{ asset('images/logo-garut.png') }}",
+        "{{ asset('images/logo-statistik.png') }}",
+        // Add more logo paths as needed
+    ];
+
+    const backgroundLogo = document.getElementById('background-logo');
+    let currentLogoIndex = 0;
+
+    function changeLogo() {
+        // Fade out current logo
+        backgroundLogo.style.opacity = 0;
+
+        // Wait for fade out
+        setTimeout(() => {
+            // Change background image
+            backgroundLogo.style.backgroundImage = `url('${logos[currentLogoIndex]}')`;
+            
+            // Fade in new logo
+            backgroundLogo.style.opacity = 0.05;
+
+            // Move to next logo, loop back to start if at end
+            currentLogoIndex = (currentLogoIndex + 1) % logos.length;
+        }, 500);
+    }
+
+    // Initial logo set
+    backgroundLogo.style.backgroundImage = `url('${logos[0]}')`;
+
+    // Change logo every 5 seconds
+    setInterval(changeLogo, 5000);
+
     // Typing effect for the welcome text
     const typingText = document.getElementById('typing-text');
     const text = "Selamat datang kembali! Silakan masuk ke akun Anda";
@@ -151,7 +227,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (index < text.length) {
             typingText.textContent += text.charAt(index);
             index++;
-            setTimeout(typeText, 50); // Adjust typing speed (in milliseconds)
+            setTimeout(typeText, 50);
         }
     }
 

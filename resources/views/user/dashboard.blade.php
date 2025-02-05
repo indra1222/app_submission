@@ -382,31 +382,6 @@
 /* ===== Base Styles ===== */
 /* CSS */
 /* CSS */
-.typing-effect {
-    overflow: hidden; /* Sembunyikan teks yang belum diketik */
-    white-space: nowrap; /* Jangan biarkan teks wrap */
-    border-right: 3px solid white; /* Cursor efek */
-    animation: typing 3s steps(40, end), blink-caret 0.75s step-end infinite;
-}
-
-
-@keyframes typing {
-    from {
-        width: 0;
-    }
-    to {
-        width: 100%;
-    }
-}
-
-@keyframes blink-caret {
-    from, to {
-        border-color: transparent;
-    }
-    50% {
-        border-color: white;
-    }
-}
 :root {
     --primary: #4e73df;
     --primary-dark: #224abe;
