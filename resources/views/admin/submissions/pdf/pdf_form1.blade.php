@@ -72,6 +72,41 @@
         margin-bottom: 10px;
     }
 
+    .page-break {
+        page-break-before: always;
+    }
+
+    .lampiran-title {
+        text-align: center;
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+
+    .lampiran-header {
+        margin-bottom: 20px;
+    }
+
+    .lampiran-nomor {
+        margin-bottom: 10px;
+    }
+
+    .recipient-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+
+    .recipient-table th,
+    .recipient-table td {
+        border: 1px solid black;
+        padding: 8px;
+        text-align: left;
+    }
+
+    .recipient-table th {
+        background-color: #f2f2f2;
+    }
+
     .kepada-section .content {
         margin-left: -20px;
         /* Sesuaikan margin untuk konten Kepada */
@@ -213,7 +248,9 @@
 </head>
 
 <body>
+    {{-- Halaman Pertama --}}
     <div class="container">
+        <!-- Konten halaman pertama tetap sama... -->
         <div class="header">
             <img src="{{ public_path('images/logo-bps.png') }}" alt="Logo Badan Pusat Statistik Garut 2">
             <div class="header-instansi">BADAN PUSAT STATISTIK KABUPATEN GARUT</div>
@@ -249,9 +286,17 @@
                 </div>
             </div>
         </div>
-
         <div class="memberi-perintah">Memberi Perintah</div>
 
+        @if(count($kepada) > 1)
+        <div class="section">
+            <div class="row">
+                <div class="label">Kepada</div>
+                <div class="colon">:</div>
+                <div class="content" style="font-style: italic;">Terlampir</div>
+            </div>
+        </div>
+        @else
         <div class="section">
             <div class="row">
                 <div class="label">Kepada</div>
@@ -275,6 +320,7 @@
                 </div>
             </div>
         </div>
+        @endif
 
         <div class="section">
             <div class="row">
@@ -305,6 +351,39 @@
                     href="mailto:bps3205@bps.go.id">bps3205@bps.go.id</a> homepage: garutkab.bps</p>
         </div>
     </div>
-</body>
 
+    {{-- Halaman Kedua (Lampiran) hanya ditampilkan jika ada lebih dari 1 penerima --}}
+    @if(count($kepada) > 1)
+    <div class="page-break">
+        <div class="lampiran-header">
+            <div class="lampiran-nomor">Lampiran Surat Tugas</div>
+            <div>Nomor: B-0736/32051/VS.300/2024</div>
+            <div>Tanggal: {{ \Carbon\Carbon::parse($submission->tanggal)->translatedFormat('d F Y') }}</div>
+        </div>
+
+        <div class="lampiran-title">DAFTAR PEGAWAI YANG DITUGASKAN</div>
+
+        <table class="recipient-table">
+            <thead>
+                <tr>
+                    <th style="width: 5%">No</th>
+                    <th style="width: 35%">Nama</th>
+                    <th style="width: 25%">NIP/NIK</th>
+                    <th style="width: 35%">Jabatan</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($kepada as $index => $recipient)
+                <tr>
+                    <td>{{ $index + 1 }}</td>
+                    <td>{{ $recipient['nama'] }}</td>
+                    <td>{{ $recipient['nip_nik'] }}</td>
+                    <td>{{ $recipient['jabatan'] }}</td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
+    @endif
+</body>
 </html>
