@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Submission;
 use App\Models\User;
+use App\Models\SuratMasuk;
 
 class DashboardController extends Controller
 {
@@ -16,26 +17,38 @@ class DashboardController extends Controller
             'pending_submissions' => Submission::where('status', 'pending')->count(),
             'approved_submissions' => Submission::where('status', 'approved')->count(),
             'surat_keluar' => Submission::whereIn('jenis_form', ['form1', 'form2', 'form3'])->count(),
-            'surat_masuk' => 0 // Set to 0 for now as it's empty/not implemented
+            'surat_masuk' => SuratMasuk::count()
         ];
-    
+
         return view('admin.dashboard', compact('stats'));
     }
+
     public function suratMasuk()
     {
-        $submissions = Submission::whereIn('jenis_form', ['form2', 'form3'])
-                                ->with('user')
-                                ->latest()
-                                ->get();
-        return view('admin.surat-masuk', compact('submissions'));
+        $suratMasuk = SuratMasuk::latest()->get();
+        return view('admin.surat-masuk', compact('suratMasuk'));
     }
 
-    public function suratKeluar() 
+    public function suratKeluar()
     {
-        $submissions = Submission::where('jenis_form', 'form1')
-                                ->with('user')
-                                ->latest()
-                                ->get();
-        return view('admin.surat-keluar', compact('submissions'));
+        // Mengambil semua surat
+        $submissions = Submission::whereIn('jenis_form', ['form1', 'form2', 'form3'])
+                               ->with('user')
+                               ->latest()
+                               ->get();
+
+        // Menghitung statistik
+        $totalSubmissions = $submissions->count();
+        $pendingSubmissions = $submissions->where('status', 'pending')->count();
+        $approvedSubmissions = $submissions->where('status', 'approved')->count();
+        $todaySubmissions = $submissions->where('created_at', '>=', today())->count();
+
+        return view('admin.surat-keluar', compact(
+            'submissions',
+            'totalSubmissions',
+            'pendingSubmissions',
+            'approvedSubmissions',
+            'todaySubmissions'
+        ));
     }
 }

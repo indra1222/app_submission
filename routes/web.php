@@ -3,6 +3,7 @@
 use App\Http\Controllers\UserDashboardController;
 use App\Http\Controllers\SubmissionController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\SuratMasukController;
 use App\Http\Controllers\Admin\SubmissionController as AdminSubmissionController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\TemplateController;
@@ -58,8 +59,8 @@ Route::middleware(['auth'])->group(function () {
         // Store and Manage
         Route::post('/submissions', 'store')->name('submissions.store');
         Route::delete('/submissions/{submission}', [SubmissionController::class, 'destroy'])
-        ->name('submissions.destroy')
-        ->middleware('auth');
+            ->name('submissions.destroy')
+            ->middleware('auth');
         
         // Document Operations
         Route::get('/submissions/{submission}/download', 'downloadDocument')
@@ -78,6 +79,25 @@ Route::middleware(['auth', 'admin'])
             Route::get('/surat-masuk', 'suratMasuk')->name('surat-masuk');
             Route::get('/surat-keluar', 'suratKeluar')->name('surat-keluar');
         });
+
+        // Surat Masuk Management
+        Route::controller(SuratMasukController::class)->group(function () {
+            // Create & Store
+            Route::post('/surat-masuk', 'store')->name('surat-masuk.store');
+            
+            // View & Download
+            Route::get('/surat-masuk/{suratMasuk}/view', 'view')->name('surat-masuk.view');
+            Route::get('/surat-masuk/{suratMasuk}/download', 'download')->name('surat-masuk.download');
+            
+            // Delete
+            Route::delete('/surat-masuk/{suratMasuk}', 'destroy')->name('surat-masuk.destroy');
+            
+            // Bulk Actions
+            Route::post('/surat-masuk/bulk-delete', 'bulkDestroy')->name('surat-masuk.bulk-destroy');
+            
+            // Export
+            Route::get('/surat-masuk/export', 'export')->name('surat-masuk.export');
+        });
         
         // Submissions Management
         Route::controller(AdminSubmissionController::class)->group(function () {
@@ -90,6 +110,8 @@ Route::middleware(['auth', 'admin'])
                 ->name('submissions.download');
             Route::get('/submissions/{submission}/view', 'viewDocument')
                 ->name('submissions.view');
+            Route::delete('/submissions/bulk-delete', 'bulkDestroy')
+                ->name('submissions.bulk-destroy');
         });
     });
 

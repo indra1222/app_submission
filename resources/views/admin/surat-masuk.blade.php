@@ -1,43 +1,80 @@
-@extends('layouts.app')
+@extends('admin.layouts.app')
 
 @section('content')
 <div class="container">
+    <!-- Blue Header -->
+    <div class="bg-primary text-white p-3 mb-4 rounded">
+        <h4 class="mb-0">Surat Masuk</h4>
+        <small>Sistem Informasi Manajemen Surat</small>
+    </div>
+
+    <!-- Form Tambah Surat Masuk -->
     <div class="card mb-4">
-        <div class="card-header bg-primary text-white">
-            <h5 class="mb-0"><i class="fas fa-envelope me-2"></i>Daftar Surat Masuk</h5>
+        <div class="card-header">
+            <h5 class="mb-0">Tambah Surat Masuk</h5>
+        </div>
+        <div class="card-body">
+            <form action="{{ route('admin.surat-masuk.store') }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Nomor Surat</label>
+                        <input type="text" name="nomor_surat" class="form-control" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Tanggal</label>
+                        <input type="date" name="tanggal" class="form-control" required>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Nama Pengirim</label>
+                    <input type="text" name="nama_pengirim" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Tujuan</label>
+                    <textarea name="tujuan" class="form-control" rows="3" required></textarea>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Upload PDF</label>
+                    <input type="file" name="file_pdf" class="form-control" accept=".pdf" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Simpan</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Tabel Daftar Surat Masuk -->
+    <div class="card">
+        <div class="card-header">
+            <h5 class="mb-0">Daftar Surat Masuk</h5>
         </div>
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-hover">
+                <table class="table table-striped">
                     <thead>
                         <tr>
-                            <th>No.</th>
+                            <th>No</th>
                             <th>Tanggal</th>
-                            <th>Nama</th>
-                            <th>NIK</th>
-                            <th>Status</th>
-                            <th>Aksi</th>
+                            <th>Nomor Surat</th>
+                            <th>Nama Pengirim</th>
+                            <th>Tujuan</th>
+                            <th>PDF</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse($submissions as $submission)
+                        @forelse($suratMasuk as $index => $surat)
                         <tr>
-                            <td>{{ $loop->iteration }}</td>
-                            <td>{{ $submission->created_at->format('d/m/Y') }}</td>
-                            <td>{{ $submission->nama }}</td>
-                            <td>{{ $submission->alamat }}</td>
-                            <td>{{ $submission->tujuan }}</td>
+                            <td>{{ $index + 1 }}</td>
+                            <td>{{ $surat->tanggal->format('d/m/Y') }}</td>
+                            <td>{{ $surat->nomor_surat }}</td>
+                            <td>{{ $surat->nama_pengirim }}</td>
+                            <td>{{ $surat->tujuan }}</td>
                             <td>
-                                <span class="badge bg-{{ $submission->status == 'pending' ? 'warning' : ($submission->status == 'approved' ? 'success' : 'danger') }}">
-                                    {{ ucfirst($submission->status) }}
-                                </span>
-                            </td>
-                            <td>
-                                @if($submission->status == 'approved')
-                                <a href="{{ route('admin.submissions.pdf', $submission) }}" class="btn btn-sm btn-success">
-                                    <i class="fas fa-download me-1"></i>Download
+                                <a href="{{ Storage::url('surat_masuk/' . $surat->file_path) }}"
+                                    class="btn btn-sm btn-primary"
+                                    target="_blank">
+                                    <i class="fas fa-file-pdf"></i> Lihat
                                 </a>
-                                @endif
                             </td>
                         </tr>
                         @empty
